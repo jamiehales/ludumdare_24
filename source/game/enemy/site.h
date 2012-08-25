@@ -2,7 +2,7 @@
 
 #include "pixelboost/logic/entity.h"
 
-class Site : pb::Entity
+class Site : public pb::Entity
 {
 public:
     Site(pb::Scene* scene, glm::vec3 position, float rotation);

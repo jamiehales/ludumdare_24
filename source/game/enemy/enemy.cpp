@@ -3,9 +3,11 @@
 #include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/target.h"
 #include "game/enemy/enemy.h"
 #include "game/player/queen.h"
 #include "game/projectiles/bullet.h"
+#include "message/target.h"
 
 Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
@@ -23,6 +25,7 @@ Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
     
     pb::Scene::EntityMap sites = GetScene()->GetEntitiesByType<Queen>();
     
+    glm::vec3 target;
     float maxDistance = 10000.f;
     for (pb::Scene::EntityMap::iterator it = sites.begin(); it != sites.end(); ++it)
     {
@@ -30,10 +33,13 @@ Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
         float distance = glm::distance(siteTransform->GetPosition(), transform->GetPosition());
         if (distance < maxDistance)
         {
-            _Target = siteTransform->GetPosition();
+            target = siteTransform->GetPosition();
             maxDistance = distance;
         }
     }
+    
+    new TargetingComponent(this, 0.2f);
+    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
 
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Enemy::OnUpdate));
 }
@@ -53,22 +59,6 @@ pb::Uid Enemy::GetStaticType()
     return pb::TypeHash("Enemy");
 }
 
-float Enemy::GetTargetAngle()
-{
-    pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
-    glm::vec3 position = transform->GetPosition();
-    
-    float rotation = glm::radians(transform->GetRotation().z + 90.f);
-    float targetRotation = glm::atan(_Target.y-position.y, _Target.x-position.x);
-    
-    float angle = glm::mod(glm::abs(rotation-targetRotation), (float)M_PI*2.f) + M_PI;
-    
-    if (angle >= M_PI)
-        angle = -M_PI + angle;
-    
-    return angle - glm::radians(90.f);
-}
-
 void Enemy::OnUpdate(const pb::Message& message)
 {
     const pb::UpdateMessage& updateMessage = static_cast<const pb::UpdateMessage&>(message);
@@ -77,17 +67,7 @@ void Enemy::OnUpdate(const pb::Message& message)
     
     glm::vec3 position = transform->GetPosition();
     float rotation = glm::radians(transform->GetRotation().z + 90.f);
-    float speed = 0.2f * updateMessage.GetDelta();
-    
-    position = position + glm::vec3(cos(rotation) * speed, sin(rotation) * speed, 0);
-    
-    rotation += GetTargetAngle() * (0.25f * updateMessage.GetDelta());
-    
-    //GetScene()->GetSystemByType<pb::DebugRenderSystem>()->AddLine(pb::kRenderPassScene, 10, position, _Target, glm::vec4(1,1,1,0.5));
-    
-    transform->SetPosition(position);
-    transform->SetRotation(glm::vec3(0,0,glm::degrees(rotation) - 90.f));
-    
+
     _FireTime -= updateMessage.GetDelta();
     if (_FireTime <= 0.f)
     {

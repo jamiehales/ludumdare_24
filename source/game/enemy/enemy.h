@@ -12,10 +12,8 @@ public:
     static pb::Uid GetStaticType();
     
 private:
-    float GetTargetAngle();
     void OnUpdate(const pb::Message& message);
     
-    glm::vec3 _Target;
     float _FireTime;
     float _FireRate;
 };

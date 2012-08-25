@@ -2,7 +2,7 @@
 
 #include "pixelboost/logic/entity.h"
 
-class Bullet : pb::Entity
+class Bullet : public pb::Entity
 {
 public:
     Bullet(pb::Scene* scene, glm::vec3 position, float rotation);

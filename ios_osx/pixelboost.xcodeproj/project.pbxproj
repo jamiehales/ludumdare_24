@@ -11,6 +11,10 @@
 		1C1B4DD615E906E5004A5EE4 /* spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DD315E906E5004A5EE4 /* spawner.cpp */; };
 		1C1B4DDA15E91F02004A5EE4 /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DD815E91F02004A5EE4 /* bullet.cpp */; };
 		1C1B4DDB15E91F02004A5EE4 /* bullet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DD815E91F02004A5EE4 /* bullet.cpp */; };
+		1C1B4DDF15E92727004A5EE4 /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DDD15E92727004A5EE4 /* target.cpp */; };
+		1C1B4DE015E92727004A5EE4 /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DDD15E92727004A5EE4 /* target.cpp */; };
+		1C1B4DE415E92781004A5EE4 /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DE215E92781004A5EE4 /* target.cpp */; };
+		1C1B4DE515E92781004A5EE4 /* target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DE215E92781004A5EE4 /* target.cpp */; };
 		1C7CA3D2143266340031E584 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D1143266340031E584 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C7CA3D4143266480031E584 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D3143266480031E584 /* OpenAL.framework */; };
 		1C7CA3D6143266520031E584 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D5143266520031E584 /* AVFoundation.framework */; };
@@ -101,6 +105,10 @@
 		1C1B4DD415E906E5004A5EE4 /* spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spawner.h; sourceTree = "<group>"; };
 		1C1B4DD815E91F02004A5EE4 /* bullet.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = bullet.cpp; sourceTree = "<group>"; };
 		1C1B4DD915E91F02004A5EE4 /* bullet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = bullet.h; sourceTree = "<group>"; };
+		1C1B4DDD15E92727004A5EE4 /* target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target.cpp; sourceTree = "<group>"; };
+		1C1B4DDE15E92727004A5EE4 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
+		1C1B4DE215E92781004A5EE4 /* target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = target.cpp; sourceTree = "<group>"; };
+		1C1B4DE315E92781004A5EE4 /* target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = target.h; sourceTree = "<group>"; };
 		1C7CA3D1143266340031E584 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		1C7CA3D3143266480031E584 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1C7CA3D5143266520031E584 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -230,10 +238,30 @@
 			path = projectiles;
 			sourceTree = "<group>";
 		};
+		1C1B4DDC15E9271D004A5EE4 /* component */ = {
+			isa = PBXGroup;
+			children = (
+				1C1B4DDD15E92727004A5EE4 /* target.cpp */,
+				1C1B4DDE15E92727004A5EE4 /* target.h */,
+			);
+			path = component;
+			sourceTree = "<group>";
+		};
+		1C1B4DE115E92776004A5EE4 /* message */ = {
+			isa = PBXGroup;
+			children = (
+				1C1B4DE215E92781004A5EE4 /* target.cpp */,
+				1C1B4DE315E92781004A5EE4 /* target.h */,
+			);
+			path = message;
+			sourceTree = "<group>";
+		};
 		1C531F2B15798502003C756D /* source */ = {
 			isa = PBXGroup;
 			children = (
+				1C1B4DDC15E9271D004A5EE4 /* component */,
 				1CF9936815C94BD2000746F8 /* game */,
+				1C1B4DE115E92776004A5EE4 /* message */,
 			);
 			name = source;
 			path = ../source;
@@ -608,6 +636,8 @@
 				1CE8BAA915E8E36F00C71B78 /* ship.cpp in Sources */,
 				1C1B4DD615E906E5004A5EE4 /* spawner.cpp in Sources */,
 				1C1B4DDB15E91F02004A5EE4 /* bullet.cpp in Sources */,
+				1C1B4DE015E92727004A5EE4 /* target.cpp in Sources */,
+				1C1B4DE515E92781004A5EE4 /* target.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -628,6 +658,8 @@
 				1CE8BAA515E8E36100C71B78 /* ship.cpp in Sources */,
 				1C1B4DD515E906E5004A5EE4 /* spawner.cpp in Sources */,
 				1C1B4DDA15E91F02004A5EE4 /* bullet.cpp in Sources */,
+				1C1B4DDF15E92727004A5EE4 /* target.cpp in Sources */,
+				1C1B4DE415E92781004A5EE4 /* target.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

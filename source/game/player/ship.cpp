@@ -6,10 +6,12 @@
 #include "pixelboost/logic/system/debug/render.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/target.h"
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
+#include "message/target.h"
 
 Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
@@ -31,6 +33,7 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     
     pb::Scene::EntityMap sites = GetScene()->GetEntitiesByType<Site>();
     
+    glm::vec3 target;
     float maxDistance = 10000.f;
     for (pb::Scene::EntityMap::iterator it = sites.begin(); it != sites.end(); ++it)
     {
@@ -38,10 +41,13 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
         float distance = glm::distance(siteTransform->GetPosition(), transform->GetPosition());
         if (distance < maxDistance)
         {
-            _Target = siteTransform->GetPosition();
+            target = siteTransform->GetPosition();
             maxDistance = distance;
         }
     }
+    
+    new TargetingComponent(this, 0.2f);
+    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
     RegisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
@@ -63,22 +69,6 @@ pb::Uid Ship::GetStaticType()
     return pb::TypeHash("Ship");
 }
 
-float Ship::GetTargetAngle()
-{
-    pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
-    glm::vec3 position = transform->GetPosition();
-    
-    float rotation = glm::radians(transform->GetRotation().z + 90.f);
-    float targetRotation = glm::atan(_Target.y-position.y, _Target.x-position.x);
-    
-    float angle = glm::mod(glm::abs(rotation-targetRotation), (float)M_PI*2.f) + M_PI;
-    
-    if (angle >= M_PI)
-        angle = -M_PI + angle;
-    
-    return angle - glm::radians(90.f);
-}
-
 void Ship::OnUpdate(const pb::Message& message)
 {
     const pb::UpdateMessage& updateMessage = static_cast<const pb::UpdateMessage&>(message);
@@ -87,14 +77,6 @@ void Ship::OnUpdate(const pb::Message& message)
     
     glm::vec3 position = transform->GetPosition();
     float rotation = glm::radians(transform->GetRotation().z + 90.f);
-    float speed = 0.2f * updateMessage.GetDelta();
-    
-    position = position + glm::vec3(cos(rotation) * speed, sin(rotation) * speed, 0);
-    
-    rotation += GetTargetAngle() * (0.25f * updateMessage.GetDelta());
-    
-    transform->SetPosition(position);
-    transform->SetRotation(glm::vec3(0,0,glm::degrees(rotation) - 90.f));
     
     if (!_ReturningHome)
     {
@@ -114,6 +96,7 @@ void Ship::OnTouch(const pb::Message& message)
     pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
     pb::Scene::EntityMap queens = GetScene()->GetEntitiesByType<Queen>();
     
+    glm::vec3 target;
     float maxDistance = 10000.f;
     for (pb::Scene::EntityMap::iterator it = queens.begin(); it != queens.end(); ++it)
     {
@@ -121,10 +104,12 @@ void Ship::OnTouch(const pb::Message& message)
         float distance = glm::distance(queenTransform->GetPosition(), transform->GetPosition());
         if (distance < maxDistance)
         {
-            _Target = queenTransform->GetPosition();
+            target = queenTransform->GetPosition();
             maxDistance = distance;
         }
     }
+    
+    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
     pb::EllipseComponent* ellipse = GetComponentByType<pb::EllipseComponent>();
     ellipse->SetColor(glm::vec4(1,1,1,1));
