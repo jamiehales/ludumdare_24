@@ -55,6 +55,7 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
     {
         _SpawnTime = g_SpawnerSiteSpawnFrequency;
         
-        new Enemy(GetScene(), transform->GetPosition(), transform->GetRotation().z);
+        float angle = glm::radians(transform->GetRotation().z + 90.f);
+        new Enemy(GetScene(), transform->GetPosition() + glm::vec3(cos(angle)*0.3f, sin(angle)*0.3f, 0.f), transform->GetRotation().z);
     }
 }

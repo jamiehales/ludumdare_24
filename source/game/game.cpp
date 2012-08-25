@@ -16,13 +16,9 @@
 Game::Game(void* viewController)
     : pb::Game(viewController)
 {
-    glm::vec2 displaySize = pb::GraphicsDevice::Instance()->GetDisplayResolution();
-    
     _Camera = new pb::OrthographicCamera();
     
     _Viewport = new pb::Viewport(0, _Camera);
-//    _Viewport->SetResolution(glm::vec2(displaySize.x, displaySize.y));
-//    _Viewport->SetPosition(glm::vec2(0, 0));
     
     _World = new World();
     _Viewport->SetScene(_World->GetScene());

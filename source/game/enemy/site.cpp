@@ -6,7 +6,7 @@
 #include "game/enemy/site/spawner.h"
 #include "game/enemy/site.h"
 
-DEFINE_DEBUG_FLOAT(g_InitialSiteSpawn, "Site Spawn Initial", 15.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_InitialSiteSpawn, "Site Spawn Initial", 0.f, 0.f, 60.f);
 DEFINE_DEBUG_FLOAT(g_SiteSpawnFrequency, "Site Spawn Frequency", 120.f, 0.f, 60.f);
 
 Site::Site(pb::Scene* scene, glm::vec3 position, float rotation)
@@ -47,8 +47,6 @@ void Site::OnUpdate(const pb::Message& message)
     if (!_Spawned)
     {
         _SpawnTime -= updateMessage.GetDelta();
-        
-        pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
         
         if (_SpawnTime <= 0.f)
         {

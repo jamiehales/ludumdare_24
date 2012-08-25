@@ -9,10 +9,15 @@
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
 #include "game/player/ship.h"
+#include "game/projectiles/bullet.h"
 
 Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
 {
+    _FireRate = 2.f;
+    _FireTime = _FireRate;
+    _ReturningHome = false;
+
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
     
@@ -90,10 +95,22 @@ void Ship::OnUpdate(const pb::Message& message)
     
     transform->SetPosition(position);
     transform->SetRotation(glm::vec3(0,0,glm::degrees(rotation) - 90.f));
+    
+    if (!_ReturningHome)
+    {
+        _FireTime -= updateMessage.GetDelta();
+        if (_FireTime <= 0.f)
+        {
+            _FireTime += _FireRate;
+            new Bullet(GetScene(), position, glm::degrees(rotation) - 90.f);
+        }
+    }
 }
 
 void Ship::OnTouch(const pb::Message& message)
 {
+    _ReturningHome = true;
+    
     pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
     pb::Scene::EntityMap queens = GetScene()->GetEntitiesByType<Queen>();
     

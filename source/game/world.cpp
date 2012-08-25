@@ -20,7 +20,7 @@ World::World()
     new Queen(_Scene, glm::vec3(14, -10, 0), 225.f);
     new Queen(_Scene, glm::vec3(-14, -10, 0), 135.f);
     
-    int numSites = 7;
+    int numSites = 10;
     for (int i=0; i<numSites; i++)
     {
         float angle = i * (360.f / numSites);
