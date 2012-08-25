@@ -19,12 +19,12 @@ Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     ellipse->SetSize(glm::vec2(1,0.5));
     ellipse->SetSolid(true);
     
-    RegisterMessageHandler(pb::UpdateMessage::GetStaticType(), MessageHandler(this, &Queen::OnUpdate));
+    RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Queen::OnUpdate));
 }
 
 Queen::~Queen()
 {
-    UnregisterMessageHandler(pb::UpdateMessage::GetStaticType(), MessageHandler(this, &Queen::OnUpdate));
+    UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Queen::OnUpdate));
 }
 
 pb::Uid Queen::GetType() const

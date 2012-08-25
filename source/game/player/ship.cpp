@@ -15,12 +15,12 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     ellipse->SetSolid(true);
     ellipse->SetColor(glm::vec4(0,0.8,0,1));
     
-    RegisterMessageHandler(pb::UpdateMessage::GetStaticType(), MessageHandler(this, &Ship::OnUpdate));
+    RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 Ship::~Ship()
 {
-    UnregisterMessageHandler(pb::UpdateMessage::GetStaticType(), MessageHandler(this, &Ship::OnUpdate));
+    UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 pb::Uid Ship::GetType() const
