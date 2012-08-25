@@ -5,9 +5,11 @@
 #include "pixelboost/input/mouseManager.h"
 #include "pixelboost/graphics/device/device.h"
 
-#include "game.h"
+#include "game/game.h"
 
 #import "MainView.h"
+
+float desiredFps = 30.f;
 
 /* keycodes for keys that are independent of keyboard layout*/
 enum {
@@ -80,7 +82,7 @@ enum {
         [self addTrackingArea:trackingArea];
         [trackingArea release];
         
-        NSTimer* timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:(1.0/30.0) target:self selector:@selector(onRedrawTimer) userInfo:nil repeats:YES];
+        NSTimer* timer = [[NSTimer alloc] initWithFireDate:[NSDate date] interval:(1.0f/desiredFps) target:self selector:@selector(onRedrawTimer) userInfo:nil repeats:YES];
         [[NSRunLoop currentRunLoop] addTimer:timer forMode:NSDefaultRunLoopMode];
     }
     
@@ -89,7 +91,7 @@ enum {
 
 - (void)onRedrawTimer
 {
-    pb::Game::Instance()->Update(1.f/30.f);
+    pb::Game::Instance()->Update(1.f/desiredFps);
     [self setNeedsDisplay:true];
 }
 
@@ -97,22 +99,8 @@ enum {
 {
     if (!pb::Game::Instance())
         return;
-    /*
-    View* view = View::Instance();
-    
-    glViewport(0.f, 0.f, self.frame.size.width, self.frame.size.height);
-    
-    glClearColor(0.5, 0.5, 0.5, 0.5);
-    glClear(GL_COLOR_BUFFER_BIT);
-    
-    if (view)
-    {
-        view->Update(1.f/30.f);
-        view->Render();
-    }
-    */
-    
-    pb::Game::Instance()->Update(1.f/30.f);
+
+    pb::Game::Instance()->Update(1.f/desiredFps);
     pb::Game::Instance()->Render();
     
     glFlush();
@@ -132,6 +120,7 @@ enum {
 {
     [super reshape];
     
+    pb::GraphicsDevice::Instance()->SetDisplayDensity(32.f);
     pb::GraphicsDevice::Instance()->SetDisplayResolution(glm::vec2(self.frame.size.width, self.frame.size.height));
     
     [self setNeedsDisplay:true];

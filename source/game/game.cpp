@@ -1,32 +1,58 @@
+#include "pixelboost/file/fileSystem.h"
 #include "pixelboost/graphics/camera/camera.h"
 #include "pixelboost/graphics/camera/viewport.h"
 #include "pixelboost/graphics/device/device.h"
 #include "pixelboost/graphics/renderer/common/renderer.h"
 #include "pixelboost/graphics/renderer/primitive/primitiveRenderer.h"
 #include "pixelboost/logic/component/graphics/rectangle.h"
-#include "pixelboost/logic/system/graphics/render/bounds.h"
 #include "pixelboost/logic/entity.h"
 #include "pixelboost/logic/scene.h"
 
 #include "game/game.h"
+#include "game/world.h"
+
+#include "fmod.hpp"
 
 Game::Game(void* viewController)
     : pb::Game(viewController)
 {
-    _Scene = new pb::Scene();
-    
-    _Scene->AddSystem(new pb::BoundsRenderSystem());
-    
     glm::vec2 displaySize = pb::GraphicsDevice::Instance()->GetDisplayResolution();
     
     _Camera = new pb::OrthographicCamera();
     
     _Viewport = new pb::Viewport(0, _Camera);
-    _Viewport->SetResolution(glm::vec2(displaySize.x, displaySize.y/2.f));
-    _Viewport->SetPosition(glm::vec2(0, displaySize.y/4.f));
-    _Viewport->SetScene(_Scene);
+//    _Viewport->SetResolution(glm::vec2(displaySize.x, displaySize.y));
+//    _Viewport->SetPosition(glm::vec2(0, 0));
+    
+    _World = new World();
+    _Viewport->SetScene(_World->GetScene());
     
     pb::Renderer::Instance()->AddViewport(_Viewport);
+    
+    /*
+    FMOD::System_Create(&_FmodSystem);
+
+    _FmodSystem->init(32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL);
+    
+    pb::File* file = pb::FileSystem::Instance()->OpenFile(pb::kFileLocationBundle, "/data/audio/sfx/ting.wav");
+    std::vector<unsigned char> data;
+    file->ReadAll(data);
+    delete file;
+    
+    FMOD_RESULT result;
+    
+    FMOD_CREATESOUNDEXINFO info;
+    memset(&info, 0, sizeof(FMOD_CREATESOUNDEXINFO));
+    info.length = data.size();
+    info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
+    result = _FmodSystem->createSound((char*)(&data[0]), FMOD_SOFTWARE|FMOD_OPENMEMORY, &info, &_FmodSound);
+    
+    _FmodSystem->createChannelGroup("noises", &_FmodGroup);
+    
+    result = _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
+    _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
+    _FmodChannel->setPaused(false);
+     */
 }
 
 Game::~Game()
@@ -39,8 +65,30 @@ Game::~Game()
 
 void Game::Update(float time)
 {
-    _Scene->Update(time);
+    _World->Update(time);
     
+    /*
+    static int count = 0;
+    count++;
+    
+    if (count % 5 == 0)
+    {
+        count = 0;
+        
+        FMOD_RESULT result;
+        result = _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
+        _FmodChannel->setChannelGroup(_FmodGroup);
+        _FmodGroup->setPitch((float)rand()/(float)RAND_MAX);
+        
+        _FmodChannel->setPaused(false);
+    }
+    
+    if (_FmodSystem != NULL)
+    {
+        _FmodSystem->update();
+    }
+    */
+
     pb::Game::Update(time);
 }
 

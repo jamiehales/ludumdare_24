@@ -14,9 +14,23 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
+               BlueprintIdentifier = "1C897B3915DEA3D600AB3196"
+               BuildableName = "libpixelboost_ios.a"
+               BlueprintName = "pixelboost_ios"
+               ReferencedContainer = "container:../pixelboost/engine/osx_ios/pixelboost.xcodeproj">
+            </BuildableReference>
+         </BuildActionEntry>
+         <BuildActionEntry
+            buildForTesting = "YES"
+            buildForRunning = "YES"
+            buildForProfiling = "YES"
+            buildForArchiving = "YES"
+            buildForAnalyzing = "YES">
+            <BuildableReference
+               BuildableIdentifier = "primary"
                BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
                BuildableName = "pixelboost.app"
-               BlueprintName = "pixelboost_ios"
+               BlueprintName = "ios"
                ReferencedContainer = "container:pixelboost.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -34,7 +48,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
             BuildableName = "pixelboost.app"
-            BlueprintName = "pixelboost_ios"
+            BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>
       </MacroExpansion>
@@ -47,13 +61,14 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
+      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
             BuildableName = "pixelboost.app"
-            BlueprintName = "pixelboost_ios"
+            BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -71,7 +86,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
             BuildableName = "pixelboost.app"
-            BlueprintName = "pixelboost_ios"
+            BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
