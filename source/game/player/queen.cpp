@@ -5,6 +5,7 @@
 #include "pixelboost/logic/message/physics/collision.h"
 #include "pixelboost/logic/message/update.h"
 
+#include "component/health.h"
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
@@ -25,13 +26,13 @@ Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, glm::vec2(2,1)/*sprite->GetSize()*/);
     physics->SetSensor(true);
     
-    RegisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Queen::OnCollision));
+    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 20.f, 5.f);
+    
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Queen::OnUpdate));
 }
 
 Queen::~Queen()
 {
-    UnregisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Queen::OnCollision));
     UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Queen::OnUpdate));
 }
 
@@ -43,21 +44,6 @@ pb::Uid Queen::GetType() const
 pb::Uid Queen::GetStaticType()
 {
     return pb::TypeHash("Queen");
-}
-
-void Queen::OnCollision(const pb::Message& message)
-{
-    const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
-    
-    if (collisionMessage.GetOtherComponent()->GetParent()->GetType() == Bullet::GetStaticType())
-    {
-        Bullet* bullet = static_cast<Bullet*>(collisionMessage.GetOtherComponent()->GetParent());
-        if (bullet->GetSource() == Bullet::kBulletSourceEnemy)
-        {
-            Destroy();
-            bullet->Destroy();
-        }
-    }
 }
 
 void Queen::OnUpdate(const pb::Message& message)

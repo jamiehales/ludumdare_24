@@ -6,9 +6,10 @@
 
 #include "game/projectiles/bullet.h"
 
-Bullet::Bullet(pb::Scene* scene, BulletSource source, glm::vec3 position, float rotation)
+Bullet::Bullet(pb::Scene* scene, BulletSource source, float power, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
     , _Source(source)
+    , _Power(power)
 {
     glm::vec2 bulletSize(0.06, 0.14);
     
@@ -48,6 +49,11 @@ Bullet::BulletSource Bullet::GetSource()
     return _Source;
 }
 
+float Bullet::GetPower()
+{
+    return _Power;
+}
+
 void Bullet::OnCollision(const pb::Message& message)
 {
     const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
@@ -56,7 +62,6 @@ void Bullet::OnCollision(const pb::Message& message)
     {
         Destroy();
     }
-//    Destroy();
 }
 
 void Bullet::OnUpdate(const pb::Message& message)

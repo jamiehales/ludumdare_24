@@ -10,6 +10,7 @@
 #include "pixelboost/logic/system/debug/render.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/health.h"
 #include "component/target.h"
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
@@ -53,14 +54,14 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
-    RegisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Ship::OnCollision));
+    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 4.f, 1.f);
+    
     RegisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 Ship::~Ship()
 {
-    UnregisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Ship::OnCollision));
     UnregisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
     UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
@@ -73,21 +74,6 @@ pb::Uid Ship::GetType() const
 pb::Uid Ship::GetStaticType()
 {
     return pb::TypeHash("Ship");
-}
-
-void Ship::OnCollision(const pb::Message& message)
-{
-    const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
-    
-    if (collisionMessage.GetOtherComponent()->GetParent()->GetType() == Bullet::GetStaticType())
-    {
-        Bullet* bullet = static_cast<Bullet*>(collisionMessage.GetOtherComponent()->GetParent());
-        if (bullet->GetSource() == Bullet::kBulletSourceEnemy)
-        {
-            Destroy();
-            bullet->Destroy();
-        }
-    }
 }
 
 void Ship::OnUpdate(const pb::Message& message)
@@ -105,7 +91,7 @@ void Ship::OnUpdate(const pb::Message& message)
         if (_FireTime <= 0.f)
         {
             _FireTime += _FireRate;
-            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, position, glm::degrees(rotation) - 90.f);
+            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, 1.f, position, glm::degrees(rotation) - 90.f);
         }
     }
 }
