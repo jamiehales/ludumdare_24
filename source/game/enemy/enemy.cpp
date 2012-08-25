@@ -1,5 +1,7 @@
 #include "pixelboost/logic/component/graphics/rectangle.h"
+#include "pixelboost/logic/component/physics/2d/userBody.h"
 #include "pixelboost/logic/component/transform/basic.h"
+#include "pixelboost/logic/message/physics/collision.h"
 #include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/scene.h"
 
@@ -40,13 +42,18 @@ Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
     
     new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
+    
+    pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, glm::vec2(0.15, 0.25)/*sprite->GetSize()*/);
+    physics->SetSensor(true);
 
+    RegisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Enemy::OnCollision));
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Enemy::OnUpdate));
 }
 
 Enemy::~Enemy()
 {
-    
+    UnregisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Enemy::OnCollision));
+    UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Enemy::OnUpdate));
 }
 
 pb::Uid Enemy::GetType() const
@@ -57,6 +64,21 @@ pb::Uid Enemy::GetType() const
 pb::Uid Enemy::GetStaticType()
 {
     return pb::TypeHash("Enemy");
+}
+
+void Enemy::OnCollision(const pb::Message& message)
+{
+    const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
+    
+    if (collisionMessage.GetOtherComponent()->GetParent()->GetType() == Bullet::GetStaticType())
+    {
+        Bullet* bullet = static_cast<Bullet*>(collisionMessage.GetOtherComponent()->GetParent());
+        if (bullet->GetSource() == Bullet::kBulletSourcePlayer)
+        {
+            Destroy();
+            bullet->Destroy();
+        }
+    }
 }
 
 void Enemy::OnUpdate(const pb::Message& message)
@@ -72,6 +94,6 @@ void Enemy::OnUpdate(const pb::Message& message)
     if (_FireTime <= 0.f)
     {
         _FireTime += _FireRate;
-        new Bullet(GetScene(), position, glm::degrees(rotation) - 90.f);
+        new Bullet(GetScene(), Bullet::kBulletSourceEnemy, position, glm::degrees(rotation) - 90.f);
     }
 }

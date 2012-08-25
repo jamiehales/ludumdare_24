@@ -1,9 +1,11 @@
 #include "pixelboost/logic/system/debug/render.h"
 #include "pixelboost/logic/system/graphics/render/bounds.h"
+#include "pixelboost/logic/system/physics/2d/physics.h"
 #include "pixelboost/logic/scene.h"
 
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
+#include "game/ui/ui.h"
 #include "game/planet.h"
 #include "game/world.h"
 
@@ -12,6 +14,13 @@ World::World()
     _Scene = new pb::Scene();
     _Scene->AddSystem(new pb::BoundsRenderSystem());
     _Scene->AddSystem(new pb::DebugRenderSystem());
+    
+    pb::PhysicsSystem2D* physicsSystem = new pb::PhysicsSystem2D();
+    //physicsSystem->SetDebugRender(true);
+    _Scene->AddSystem(physicsSystem);
+    
+    new GameUi(_Scene, glm::vec3(0, 10.5f, 0));
+    new GameUi(_Scene, glm::vec3(0, -10.5f, 0));
     
     new Planet(_Scene);
     

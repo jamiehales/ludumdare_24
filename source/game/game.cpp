@@ -3,7 +3,7 @@
 #include "pixelboost/graphics/camera/viewport.h"
 #include "pixelboost/graphics/device/device.h"
 #include "pixelboost/graphics/renderer/common/renderer.h"
-#include "pixelboost/graphics/renderer/primitive/primitiveRenderer.h"
+#include "pixelboost/graphics/renderer/sprite/spriteRenderer.h"
 #include "pixelboost/logic/component/graphics/rectangle.h"
 #include "pixelboost/logic/entity.h"
 #include "pixelboost/logic/scene.h"
@@ -24,6 +24,8 @@ Game::Game(void* viewController)
     _Viewport->SetScene(_World->GetScene());
     
     pb::Renderer::Instance()->AddViewport(_Viewport);
+    
+    GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
     
     /*
     FMOD::System_Create(&_FmodSystem);

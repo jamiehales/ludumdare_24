@@ -12,6 +12,7 @@ public:
     static pb::Uid GetStaticType();
     
 private:
+    void OnCollision(const pb::Message& message);
     void OnUpdate(const pb::Message& message);
     
     float _FireTime;

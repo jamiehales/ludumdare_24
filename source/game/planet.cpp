@@ -10,7 +10,7 @@ Planet::Planet(pb::Scene* scene)
     transform->SetPosition(glm::vec3(0,0,-1));
     
     pb::EllipseComponent* ellipse = new pb::EllipseComponent(this);
-    ellipse->SetSize(glm::vec2(3,3));
+    ellipse->SetSize(glm::vec2(6,6));
     ellipse->SetSolid(true);
 }
 

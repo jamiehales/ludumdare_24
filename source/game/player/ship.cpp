@@ -1,7 +1,9 @@
-#include "pixelboost/logic/component/graphics/ellipse.h"
+#include "pixelboost/logic/component/graphics/sprite.h"
 #include "pixelboost/logic/component/input/rectTouch.h"
+#include "pixelboost/logic/component/physics/2d/userBody.h"
 #include "pixelboost/logic/component/transform/basic.h"
 #include "pixelboost/logic/message/input/touch.h"
+#include "pixelboost/logic/message/physics/collision.h"
 #include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/system/debug/render.h"
 #include "pixelboost/logic/scene.h"
@@ -23,10 +25,7 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
     
-    pb::EllipseComponent* ellipse = new pb::EllipseComponent(this);
-    ellipse->SetSize(glm::vec2(0.15,0.25));
-    ellipse->SetSolid(true);
-    ellipse->SetColor(glm::vec4(0,0.8,0,1));
+    pb::SpriteComponent* sprite = new pb::SpriteComponent(this, "ship");
     
     pb::RectTouchComponent* touch = new pb::RectTouchComponent(this);
     touch->SetSize(glm::vec2(1.f, 1.f));
@@ -46,15 +45,20 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
         }
     }
     
+    pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize());
+    physics->SetSensor(true);
+    
     new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
+    RegisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Ship::OnCollision));
     RegisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 Ship::~Ship()
 {
+    UnregisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Ship::OnCollision));
     UnregisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
     UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
@@ -67,6 +71,21 @@ pb::Uid Ship::GetType() const
 pb::Uid Ship::GetStaticType()
 {
     return pb::TypeHash("Ship");
+}
+
+void Ship::OnCollision(const pb::Message& message)
+{
+    const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
+    
+    if (collisionMessage.GetOtherComponent()->GetParent()->GetType() == Bullet::GetStaticType())
+    {
+        Bullet* bullet = static_cast<Bullet*>(collisionMessage.GetOtherComponent()->GetParent());
+        if (bullet->GetSource() == Bullet::kBulletSourceEnemy)
+        {
+            Destroy();
+            bullet->Destroy();
+        }
+    }
 }
 
 void Ship::OnUpdate(const pb::Message& message)
@@ -84,7 +103,7 @@ void Ship::OnUpdate(const pb::Message& message)
         if (_FireTime <= 0.f)
         {
             _FireTime += _FireRate;
-            new Bullet(GetScene(), position, glm::degrees(rotation) - 90.f);
+            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, position, glm::degrees(rotation) - 90.f);
         }
     }
 }
@@ -109,8 +128,5 @@ void Ship::OnTouch(const pb::Message& message)
         }
     }
     
-    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
-    
-    pb::EllipseComponent* ellipse = GetComponentByType<pb::EllipseComponent>();
-    ellipse->SetColor(glm::vec4(1,1,1,1));
+    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));    
 }
