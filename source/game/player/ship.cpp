@@ -1,3 +1,5 @@
+#include "glm/gtc/matrix_transform.hpp"
+
 #include "pixelboost/logic/component/graphics/sprite.h"
 #include "pixelboost/logic/component/input/rectTouch.h"
 #include "pixelboost/logic/component/physics/2d/userBody.h"
@@ -23,7 +25,7 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     _ReturningHome = false;
 
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
-    transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
+    transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1)*0.25f);
     
     pb::SpriteComponent* sprite = new pb::SpriteComponent(this, "ship");
     
@@ -45,7 +47,7 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
         }
     }
     
-    pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize());
+    pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
     
     new TargetingComponent(this, 0.2f);

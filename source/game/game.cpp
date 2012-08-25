@@ -20,12 +20,12 @@ Game::Game(void* viewController)
     
     _Viewport = new pb::Viewport(0, _Camera);
     
+    GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
+    
     _World = new World();
     _Viewport->SetScene(_World->GetScene());
     
     pb::Renderer::Instance()->AddViewport(_Viewport);
-    
-    GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
     
     /*
     FMOD::System_Create(&_FmodSystem);

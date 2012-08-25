@@ -6,6 +6,7 @@
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
 #include "game/ui/ui.h"
+#include "game/background.h"
 #include "game/planet.h"
 #include "game/world.h"
 
@@ -18,6 +19,8 @@ World::World()
     pb::PhysicsSystem2D* physicsSystem = new pb::PhysicsSystem2D();
     //physicsSystem->SetDebugRender(true);
     _Scene->AddSystem(physicsSystem);
+    
+    new Background(_Scene);
     
     new GameUi(_Scene, glm::vec3(0, 10.5f, 0));
     new GameUi(_Scene, glm::vec3(0, -10.5f, 0));
