@@ -1,20 +1,16 @@
 #pragma once
 
-namespace pb
-{
-    class Scene;
-}
+#include "glm/glm.hpp"
 
-class World
+#include "pixelboost/logic/scene.h"
+
+class World : public pb::Scene
 {
 public:
     World();
     ~World();
     
-    pb::Scene* GetScene();
-    
-    void Update(float time);
-    
-private:
-    pb::Scene* _Scene;
+    template <class T> bool FindClosestTarget(glm::vec3 position, glm::vec3& target);
 };
+
+#include "game/world.inl"

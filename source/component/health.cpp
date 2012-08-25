@@ -36,19 +36,8 @@ void HealthComponent::OnCollision(const pb::Message& message)
     {
         Bullet* bullet = static_cast<Bullet*>(collisionMessage.GetOtherComponent()->GetParent());
         
-        bool takeDamage = false;
-        
-        if (_Type == kHealthTypeEnemy && bullet->GetSource() == Bullet::kBulletSourcePlayer)
-        {
-            takeDamage = true;
-        }
-        
-        if (_Type == kHealthTypePlayer && bullet->GetSource() == Bullet::kBulletSourceEnemy)
-        {
-            takeDamage = true;
-        }
-        
-        if (takeDamage)
+        if ((_Type == kHealthTypeEnemy && bullet->GetSource() == Bullet::kBulletSourcePlayer) ||
+            (_Type == kHealthTypePlayer && bullet->GetSource() == Bullet::kBulletSourceEnemy))
         {
             _Health -= bullet->GetPower() / _Armour;
             

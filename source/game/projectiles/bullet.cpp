@@ -10,6 +10,7 @@ Bullet::Bullet(pb::Scene* scene, BulletSource source, float power, glm::vec3 pos
     : pb::Entity(scene, 0)
     , _Source(source)
     , _Power(power)
+    , _TimeLeft(7.f)
 {
     glm::vec2 bulletSize(0.06, 0.14);
     
@@ -77,4 +78,9 @@ void Bullet::OnUpdate(const pb::Message& message)
     position = position + glm::vec3(cos(rotation)*speed, sin(rotation)*speed, 0.f);
     
     transform->SetPosition(position);
+
+    _TimeLeft -= updateMessage.GetDelta();
+    
+    if (_TimeLeft < 0.f)
+        Destroy();
 }

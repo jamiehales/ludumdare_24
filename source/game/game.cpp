@@ -23,7 +23,7 @@ Game::Game(void* viewController)
     GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
     
     _World = new World();
-    _Viewport->SetScene(_World->GetScene());
+    _Viewport->SetScene(_World);
     
     pb::Renderer::Instance()->AddViewport(_Viewport);
     

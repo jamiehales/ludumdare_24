@@ -16,6 +16,7 @@
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
+#include "game/world.h"
 #include "message/target.h"
 
 Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
@@ -33,20 +34,8 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     pb::RectTouchComponent* touch = new pb::RectTouchComponent(this);
     touch->SetSize(glm::vec2(1.f, 1.f));
     
-    pb::Scene::EntityMap sites = GetScene()->GetEntitiesByType<Site>();
-    
     glm::vec3 target;
-    float maxDistance = 10000.f;
-    for (pb::Scene::EntityMap::iterator it = sites.begin(); it != sites.end(); ++it)
-    {
-        pb::TransformComponent* siteTransform = it->second->GetComponentByType<pb::TransformComponent>();
-        float distance = glm::distance(siteTransform->GetPosition(), transform->GetPosition());
-        if (distance < maxDistance)
-        {
-            target = siteTransform->GetPosition();
-            maxDistance = distance;
-        }
-    }
+    static_cast<World*>(GetScene())->FindClosestTarget<Site>(transform->GetPosition(), target);
     
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
@@ -101,20 +90,8 @@ void Ship::OnTouch(const pb::Message& message)
     _ReturningHome = true;
     
     pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
-    pb::Scene::EntityMap queens = GetScene()->GetEntitiesByType<Queen>();
     
     glm::vec3 target;
-    float maxDistance = 10000.f;
-    for (pb::Scene::EntityMap::iterator it = queens.begin(); it != queens.end(); ++it)
-    {
-        pb::TransformComponent* queenTransform = it->second->GetComponentByType<pb::TransformComponent>();
-        float distance = glm::distance(queenTransform->GetPosition(), transform->GetPosition());
-        if (distance < maxDistance)
-        {
-            target = queenTransform->GetPosition();
-            maxDistance = distance;
-        }
-    }
-    
-    GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));    
+    if (static_cast<World*>(GetScene())->FindClosestTarget<Queen>(transform->GetPosition(), target))
+        GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
 }

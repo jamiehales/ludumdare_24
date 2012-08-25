@@ -10,6 +10,7 @@
 #include "game/enemy/enemy.h"
 #include "game/player/queen.h"
 #include "game/projectiles/bullet.h"
+#include "game/world.h"
 #include "message/target.h"
 
 Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
@@ -26,20 +27,8 @@ Enemy::Enemy(pb::Scene* scene, glm::vec3 position, float rotation)
     ellipse->SetSolid(true);
     ellipse->SetColor(glm::vec4(0.8,0,0,1));
     
-    pb::Scene::EntityMap sites = GetScene()->GetEntitiesByType<Queen>();
-    
     glm::vec3 target;
-    float maxDistance = 10000.f;
-    for (pb::Scene::EntityMap::iterator it = sites.begin(); it != sites.end(); ++it)
-    {
-        pb::TransformComponent* siteTransform = it->second->GetComponentByType<pb::TransformComponent>();
-        float distance = glm::distance(siteTransform->GetPosition(), transform->GetPosition());
-        if (distance < maxDistance)
-        {
-            target = siteTransform->GetPosition();
-            maxDistance = distance;
-        }
-    }
+    static_cast<World*>(scene)->FindClosestTarget<Queen>(transform->GetPosition(), target);
     
     new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));

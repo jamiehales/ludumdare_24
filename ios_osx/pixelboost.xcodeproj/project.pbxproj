@@ -23,6 +23,8 @@
 		1C1B4DF315E94FFB004A5EE4 /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF015E94FF9004A5EE4 /* background.cpp */; };
 		1C1B4DF615E95B9A004A5EE4 /* health.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF415E95B99004A5EE4 /* health.cpp */; };
 		1C1B4DF715E95B9A004A5EE4 /* health.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF415E95B99004A5EE4 /* health.cpp */; };
+		1C1B4DF915E96B39004A5EE4 /* world.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF815E96B39004A5EE4 /* world.inl */; };
+		1C1B4DFA15E96B39004A5EE4 /* world.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF815E96B39004A5EE4 /* world.inl */; };
 		1C7CA3D2143266340031E584 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D1143266340031E584 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C7CA3D4143266480031E584 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D3143266480031E584 /* OpenAL.framework */; };
 		1C7CA3D6143266520031E584 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D5143266520031E584 /* AVFoundation.framework */; };
@@ -125,6 +127,7 @@
 		1C1B4DF115E94FFA004A5EE4 /* background.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = background.h; sourceTree = "<group>"; };
 		1C1B4DF415E95B99004A5EE4 /* health.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = health.cpp; sourceTree = "<group>"; };
 		1C1B4DF515E95B99004A5EE4 /* health.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = health.h; sourceTree = "<group>"; };
+		1C1B4DF815E96B39004A5EE4 /* world.inl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = world.inl; sourceTree = "<group>"; };
 		1C7CA3D1143266340031E584 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		1C7CA3D3143266480031E584 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1C7CA3D5143266520031E584 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -526,6 +529,7 @@
 				1CE8BA7615E8D92700C71B78 /* planet.h */,
 				1CE8BA7215E8D8A200C71B78 /* world.cpp */,
 				1CE8BA7315E8D8A200C71B78 /* world.h */,
+				1C1B4DF815E96B39004A5EE4 /* world.inl */,
 			);
 			path = game;
 			sourceTree = "<group>";
@@ -634,6 +638,7 @@
 				1CB8528E15E82DDF00012A80 /* InfoPlist.strings in Resources */,
 				1CB8528F15E82DDF00012A80 /* MainMenu.xib in Resources */,
 				1CA96EDF15E84ADD00FC1EF2 /* data in Resources */,
+				1C1B4DFA15E96B39004A5EE4 /* world.inl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -646,6 +651,7 @@
 				1CB8527915E82DD500012A80 /* MainWindow.xib in Resources */,
 				1CB8527A15E82DD500012A80 /* pixelboostViewController.xib in Resources */,
 				1CB8527B15E82DD500012A80 /* MainWindow-iPad.xib in Resources */,
+				1C1B4DF915E96B39004A5EE4 /* world.inl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

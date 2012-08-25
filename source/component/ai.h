@@ -18,6 +18,7 @@ struct AiDefinition
     float Defense;
     float Speed;
     float Power;
+    float Avoidance;
 };
 
 class AiComponent : public pb::Component
