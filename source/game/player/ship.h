@@ -12,5 +12,10 @@ public:
     static pb::Uid GetStaticType();
     
 private:
+    float GetTargetAngle();
+    
+    void OnTouch(const pb::Message& message);
     void OnUpdate(const pb::Message& message);
+    
+    glm::vec3 _Target;
 };

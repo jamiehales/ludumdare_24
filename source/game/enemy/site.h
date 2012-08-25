@@ -5,7 +5,7 @@
 class Site : pb::Entity
 {
 public:
-    Site(pb::Scene* scene);
+    Site(pb::Scene* scene, glm::vec3 position, float rotation);
     ~Site();
     
     virtual pb::Uid GetType() const;

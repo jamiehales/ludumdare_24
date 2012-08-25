@@ -29,7 +29,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
-               BuildableName = "pixelboost.app"
+               BuildableName = "LD24_Evolution.app"
                BlueprintName = "ios"
                ReferencedContainer = "container:pixelboost.xcodeproj">
             </BuildableReference>
@@ -47,7 +47,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
-            BuildableName = "pixelboost.app"
+            BuildableName = "LD24_Evolution.app"
             BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>
@@ -61,13 +61,12 @@
       buildConfiguration = "Debug"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
-      enableOpenGLFrameCaptureMode = "0"
       allowLocationSimulation = "YES">
       <BuildableProductRunnable>
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
-            BuildableName = "pixelboost.app"
+            BuildableName = "LD24_Evolution.app"
             BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>
@@ -85,7 +84,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "1CEC1C681426847F00FEB08C"
-            BuildableName = "pixelboost.app"
+            BuildableName = "LD24_Evolution.app"
             BlueprintName = "ios"
             ReferencedContainer = "container:pixelboost.xcodeproj">
          </BuildableReference>

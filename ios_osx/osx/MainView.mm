@@ -3,13 +3,14 @@
 #include "pixelboost/framework/game.h"
 #include "pixelboost/input/keyboardManager.h"
 #include "pixelboost/input/mouseManager.h"
+#include "pixelboost/input/touchManager.h"
 #include "pixelboost/graphics/device/device.h"
 
 #include "game/game.h"
 
 #import "MainView.h"
 
-float desiredFps = 30.f;
+float desiredFps = 60.f;
 
 /* keycodes for keys that are independent of keyboard layout*/
 enum {
@@ -157,6 +158,7 @@ enum {
     if ([event modifierFlags] & NSAlternateKeyMask)
         modifiers |= pb::kModifierAlt;
     
+    pb::Game::Instance()->GetTouchManager()->OnTouchDown(0, glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
     pb::Game::Instance()->GetMouseManager()->OnMouseDown(pb::kMouseButtonLeft, modifiers, glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
 }
 
@@ -167,6 +169,7 @@ enum {
     
     NSPoint eventLocation = [self convertPoint:event.locationInWindow fromView:nil];
     
+    pb::Game::Instance()->GetTouchManager()->OnTouchMove(0, glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
     pb::Game::Instance()->GetMouseManager()->OnMouseMove(glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
 }
 
@@ -191,6 +194,7 @@ enum {
     if ([event modifierFlags] & NSAlternateKeyMask)
         modifiers |= pb::kModifierAlt;
     
+    pb::Game::Instance()->GetTouchManager()->OnTouchUp(0, glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
     pb::Game::Instance()->GetMouseManager()->OnMouseUp(pb::kMouseButtonLeft, modifiers, glm::vec2(eventLocation.x, self.frame.size.height-eventLocation.y));
 }
 
