@@ -3,6 +3,7 @@
 #include "pixelboost/logic/system/physics/2d/physics.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/ai.h"
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
 #include "game/ui/ui.h"
@@ -18,6 +19,9 @@ World::World()
     pb::PhysicsSystem2D* physicsSystem = new pb::PhysicsSystem2D();
     //physicsSystem->SetDebugRender(true);
     AddSystem(physicsSystem);
+    
+    _EnemyAi = new AiDefinition();
+    _PlayerAi = new AiDefinition();
     
     new Background(this);
     
@@ -42,4 +46,14 @@ World::World()
 World::~World()
 {
     
+}
+
+AiDefinition& World::GetEnemyAiDefinition()
+{
+    return *_EnemyAi;
+}
+
+AiDefinition& World::GetPlayerAiDefinition()
+{
+    return *_PlayerAi;
 }

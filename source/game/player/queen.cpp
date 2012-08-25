@@ -26,7 +26,7 @@ Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, glm::vec2(2,1)/*sprite->GetSize()*/);
     physics->SetSensor(true);
     
-    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 20.f, 5.f);
+    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 12.f, 7.f);
     
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Queen::OnUpdate));
 }

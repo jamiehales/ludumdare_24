@@ -13,8 +13,13 @@ enum AiType
     kAiTypeEnemy
 };
 
-struct AiDefinition
+class AiDefinition
 {
+public:
+    AiDefinition();
+    void Adapt(AiDefinition& definition);
+    
+public:
     float Defense;
     float Speed;
     float Power;
@@ -24,7 +29,7 @@ struct AiDefinition
 class AiComponent : public pb::Component
 {
 public:
-    AiComponent(pb::Entity* entity, AiType type, AiDefinition definition);
+    AiComponent(pb::Entity* entity, AiType type, const AiDefinition definition);
     ~AiComponent();
     
 private:

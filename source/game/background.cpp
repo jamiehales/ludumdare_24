@@ -7,7 +7,7 @@ Background::Background(pb::Scene* scene)
     : pb::Entity(scene, 0)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
-    transform->SetTransform(glm::vec3(0,0,-10), glm::vec3(0,0,0), glm::vec3(1,1,1));
+    transform->SetTransform(glm::vec3(0,0,-100), glm::vec3(0,0,0), glm::vec3(1,1,1));
     
     new pb::SpriteComponent(this, "background");
 }

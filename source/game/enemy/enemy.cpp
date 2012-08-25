@@ -9,6 +9,7 @@
 #include "component/target.h"
 #include "game/enemy/enemy.h"
 #include "game/player/queen.h"
+#include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
 #include "game/world.h"
 #include "message/target.h"
@@ -70,5 +71,11 @@ void Enemy::OnUpdate(const pb::Message& message)
     {
         _FireTime += _FireRate;
         new Bullet(GetScene(), Bullet::kBulletSourceEnemy, 1.f, position, glm::degrees(rotation) - 90.f);
+        
+        glm::vec3 target;
+        if (!static_cast<World*>(GetScene())->FindClosestTarget<Queen>(transform->GetPosition(), target))
+            static_cast<World*>(GetScene())->FindClosestTarget<Ship>(transform->GetPosition(), target);
+            
+        GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     }
 }

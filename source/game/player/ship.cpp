@@ -12,7 +12,8 @@
 
 #include "component/health.h"
 #include "component/target.h"
-#include "game/enemy/site.h"
+#include "game/enemy/site/spawner.h"
+#include "game/enemy/enemy.h"
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
@@ -27,15 +28,16 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     _ReturningHome = false;
 
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
-    transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1)*0.25f);
+    transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
     
     pb::SpriteComponent* sprite = new pb::SpriteComponent(this, "ship");
+    sprite->SetLocalTransform(glm::scale(glm::mat4x4(), glm::vec3(1,1,1)*0.25f));
     
     pb::RectTouchComponent* touch = new pb::RectTouchComponent(this);
     touch->SetSize(glm::vec2(1.f, 1.f));
     
     glm::vec3 target;
-    static_cast<World*>(GetScene())->FindClosestTarget<Site>(transform->GetPosition(), target);
+    static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target);
     
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
@@ -80,7 +82,13 @@ void Ship::OnUpdate(const pb::Message& message)
         if (_FireTime <= 0.f)
         {
             _FireTime += _FireRate;
-            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, 1.f, position, glm::degrees(rotation) - 90.f);
+            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, 3.f, position, glm::degrees(rotation) - 90.f);
+            
+            glm::vec3 target;
+            if (!static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target))
+                static_cast<World*>(GetScene())->FindClosestTarget<Enemy>(transform->GetPosition(), target);
+            
+            GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
         }
     }
 }

@@ -4,6 +4,7 @@
 
 namespace pb
 {
+    class EllipseComponent;
     class Message;
 }
 
@@ -25,6 +26,7 @@ public:
 private:
     void OnCollision(const pb::Message& message);
     
+    pb::EllipseComponent* _Visual;
     HealthType _Type;
     float _Health;
     float _Armour;

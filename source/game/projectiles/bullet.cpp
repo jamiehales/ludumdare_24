@@ -12,7 +12,7 @@ Bullet::Bullet(pb::Scene* scene, BulletSource source, float power, glm::vec3 pos
     , _Power(power)
     , _TimeLeft(7.f)
 {
-    glm::vec2 bulletSize(0.06, 0.14);
+    glm::vec2 bulletSize(0.06, 0.14 * _Power);
     
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetTransform(position - glm::vec3(0,0,1), glm::vec3(0,0,rotation), glm::vec3(1,1,1));
@@ -25,13 +25,11 @@ Bullet::Bullet(pb::Scene* scene, BulletSource source, float power, glm::vec3 pos
     pb::PhysicsUserBody2DComponent* physicsBody = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, bulletSize);
     physicsBody->SetSensor(true);
     
-    RegisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Bullet::OnCollision));
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Bullet::OnUpdate));
 }
 
 Bullet::~Bullet()
 {
-    UnregisterMessageHandler<pb::PhysicsCollisionMessage>(MessageHandler(this, &Bullet::OnCollision));
     UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Bullet::OnUpdate));
 }
 
@@ -55,20 +53,11 @@ float Bullet::GetPower()
     return _Power;
 }
 
-void Bullet::OnCollision(const pb::Message& message)
-{
-    const pb::PhysicsCollisionMessage& collisionMessage = static_cast<const pb::PhysicsCollisionMessage&>(message);
-    
-    if (collisionMessage.GetOtherComponent()->GetParent()->GetType() == Bullet::GetStaticType())
-    {
-        Destroy();
-    }
-}
-
 void Bullet::OnUpdate(const pb::Message& message)
 {
     const pb::UpdateMessage& updateMessage = static_cast<const pb::UpdateMessage&>(message);
-    
+ 
+    pb::RectangleComponent* rectangle = GetComponentByType<pb::RectangleComponent>();
     pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
     
     glm::vec3 position = transform->GetPosition();
@@ -81,6 +70,11 @@ void Bullet::OnUpdate(const pb::Message& message)
 
     _TimeLeft -= updateMessage.GetDelta();
     
-    if (_TimeLeft < 0.f)
+    _Power *= 1.f - updateMessage.GetDelta() / 4.f;
+    
+    glm::vec2 bulletSize(0.06, 0.14 * _Power);
+    rectangle->SetSize(bulletSize);
+    
+    if (_Power < 0.f)
         Destroy();
 }
