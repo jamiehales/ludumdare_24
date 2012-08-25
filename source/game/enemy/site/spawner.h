@@ -2,18 +2,18 @@
 
 #include "pixelboost/logic/entity.h"
 
-class Site : pb::Entity
+class SpawnerSite : public pb::Entity
 {
 public:
-    Site(pb::Scene* scene, glm::vec3 position, float rotation);
-    ~Site();
+    SpawnerSite(pb::Scene* scene, pb::Uid site);
+    ~SpawnerSite();
     
     virtual pb::Uid GetType() const;
     static pb::Uid GetStaticType();
     
-private:
     void OnUpdate(const pb::Message& message);
     
-    bool _Spawned;
+private:
     float _SpawnTime;
+    pb::Uid _SiteUid;
 };

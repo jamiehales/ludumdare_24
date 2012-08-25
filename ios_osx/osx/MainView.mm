@@ -101,7 +101,6 @@ enum {
     if (!pb::Game::Instance())
         return;
 
-    pb::Game::Instance()->Update(1.f/desiredFps);
     pb::Game::Instance()->Render();
     
     glFlush();

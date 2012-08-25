@@ -6,7 +6,7 @@
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 
-DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequency, "Queen Spawn Frequency", 15.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequency, "Queen Spawn Frequency", 30.f, 0.f, 60.f);
 
 Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)

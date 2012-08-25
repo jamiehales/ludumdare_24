@@ -22,7 +22,7 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     ellipse->SetColor(glm::vec4(0,0.8,0,1));
     
     pb::RectTouchComponent* touch = new pb::RectTouchComponent(this);
-    touch->SetSize(glm::vec2(0.5, 0.5));
+    touch->SetSize(glm::vec2(1.f, 1.f));
     
     pb::Scene::EntityMap sites = GetScene()->GetEntitiesByType<Site>();
     
@@ -87,10 +87,6 @@ void Ship::OnUpdate(const pb::Message& message)
     position = position + glm::vec3(cos(rotation) * speed, sin(rotation) * speed, 0);
     
     rotation += GetTargetAngle() * (0.25f * updateMessage.GetDelta());
-    
-    float targetRotation = glm::atan(_Target.y-position.y, _Target.x-position.x);
-    
-    GetScene()->GetSystemByType<pb::DebugRenderSystem>()->AddLine(pb::kRenderPassScene, 10, position, _Target, glm::vec4(1,1,1,0.5));
     
     transform->SetPosition(position);
     transform->SetRotation(glm::vec3(0,0,glm::degrees(rotation) - 90.f));

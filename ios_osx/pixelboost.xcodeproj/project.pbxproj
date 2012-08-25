@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1C1B4DD515E906E5004A5EE4 /* spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DD315E906E5004A5EE4 /* spawner.cpp */; };
+		1C1B4DD615E906E5004A5EE4 /* spawner.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DD315E906E5004A5EE4 /* spawner.cpp */; };
 		1C7CA3D2143266340031E584 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D1143266340031E584 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C7CA3D4143266480031E584 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D3143266480031E584 /* OpenAL.framework */; };
 		1C7CA3D6143266520031E584 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D5143266520031E584 /* AVFoundation.framework */; };
@@ -93,6 +95,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1C1B4DD315E906E5004A5EE4 /* spawner.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = spawner.cpp; sourceTree = "<group>"; };
+		1C1B4DD415E906E5004A5EE4 /* spawner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = spawner.h; sourceTree = "<group>"; };
 		1C7CA3D1143266340031E584 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		1C7CA3D3143266480031E584 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1C7CA3D5143266520031E584 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -204,6 +208,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1C1B4DD215E906D0004A5EE4 /* site */ = {
+			isa = PBXGroup;
+			children = (
+				1C1B4DD315E906E5004A5EE4 /* spawner.cpp */,
+				1C1B4DD415E906E5004A5EE4 /* spawner.h */,
+			);
+			path = site;
+			sourceTree = "<group>";
+		};
 		1C531F2B15798502003C756D /* source */ = {
 			isa = PBXGroup;
 			children = (
@@ -356,6 +369,7 @@
 		1CE8BA9815E8E36100C71B78 /* enemy */ = {
 			isa = PBXGroup;
 			children = (
+				1C1B4DD215E906D0004A5EE4 /* site */,
 				1CE8BA9915E8E36100C71B78 /* enemy.cpp */,
 				1CE8BA9A15E8E36100C71B78 /* enemy.h */,
 				1CE8BA9B15E8E36100C71B78 /* site.cpp */,
@@ -578,6 +592,7 @@
 				1CE8BAA715E8E36900C71B78 /* site.cpp in Sources */,
 				1CE8BAA815E8E36C00C71B78 /* queen.cpp in Sources */,
 				1CE8BAA915E8E36F00C71B78 /* ship.cpp in Sources */,
+				1C1B4DD615E906E5004A5EE4 /* spawner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -596,6 +611,7 @@
 				1CE8BAA315E8E36100C71B78 /* site.cpp in Sources */,
 				1CE8BAA415E8E36100C71B78 /* queen.cpp in Sources */,
 				1CE8BAA515E8E36100C71B78 /* ship.cpp in Sources */,
+				1C1B4DD515E906E5004A5EE4 /* spawner.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

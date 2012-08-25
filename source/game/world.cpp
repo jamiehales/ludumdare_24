@@ -15,10 +15,10 @@ World::World()
     
     new Planet(_Scene);
     
-    new Queen(_Scene, glm::vec3(0, 10, 0), 0.f);
-    new Queen(_Scene, glm::vec3(0, -10, 0), 180.f);
-    new Queen(_Scene, glm::vec3(10, 0, 0), -90.f);
-    new Queen(_Scene, glm::vec3(-10, 0, 0), 90.f);
+    new Queen(_Scene, glm::vec3(14, 10, 0), -45.f);
+    new Queen(_Scene, glm::vec3(-14, 10, 0), 45.f);
+    new Queen(_Scene, glm::vec3(14, -10, 0), 225.f);
+    new Queen(_Scene, glm::vec3(-14, -10, 0), 135.f);
     
     int numSites = 7;
     for (int i=0; i<numSites; i++)
