@@ -25,6 +25,7 @@ public:
     
     void LoadSound(const std::string& name, pb::FileLocation fileLocation, const std::string& filename);
     void PlaySound(const std::string& name, float pitch, float volume);
+    void PlayMusic(const std::string& name);
     
 private:
     FMOD::System* _System;

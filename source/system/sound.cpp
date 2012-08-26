@@ -48,3 +48,14 @@ void SoundSystem::PlaySound(const std::string& name, float pitch, float volume)
     channel->setPaused(false);
     channel->setVolume(volume);
 }
+
+void SoundSystem::PlayMusic(const std::string& name)
+{
+    FMOD::Sound* sound = _Sounds[name];
+    FMOD::Channel* channel;
+    
+    sound->setLoopCount(-1);
+    sound->setMode(FMOD_LOOP_NORMAL);
+    _System->playSound(FMOD_CHANNEL_FREE, sound, true, &channel);
+    channel->setPaused(false);
+}

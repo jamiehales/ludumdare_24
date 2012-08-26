@@ -24,6 +24,9 @@ Game::Game(void* viewController)
     _SoundSystem->LoadSound("shoot_2", pb::kFileLocationBundle, "/data/audio/sfx/shoot_2.wav");
     _SoundSystem->LoadSound("explosion_1", pb::kFileLocationBundle, "/data/audio/sfx/explosion_1.wav");
     _SoundSystem->LoadSound("explosion_2", pb::kFileLocationBundle, "/data/audio/sfx/explosion_2.wav");
+    _SoundSystem->LoadSound("music", pb::kFileLocationBundle, "/data/audio/bgm/music.mp3");
+    
+    _SoundSystem->PlayMusic("music");
     
     Transition(kGameModeMenu);
 }
