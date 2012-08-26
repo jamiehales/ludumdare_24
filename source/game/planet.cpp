@@ -7,7 +7,7 @@ Planet::Planet(pb::Scene* scene)
     : pb::Entity(scene, 0)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
-    transform->SetPosition(glm::vec3(0,0,-1));
+    transform->SetPosition(glm::vec3(0,0,-5));
     
     pb::EllipseComponent* ellipse = new pb::EllipseComponent(this);
     ellipse->SetSize(glm::vec2(6,6));

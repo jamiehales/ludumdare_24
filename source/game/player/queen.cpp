@@ -5,12 +5,14 @@
 #include "pixelboost/logic/message/physics/collision.h"
 #include "pixelboost/logic/message/update.h"
 
+#include "component/ai.h"
 #include "component/health.h"
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
+#include "game/world.h"
 
-DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequency, "Queen Spawn Frequency", 30.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequency, "Queen Spawn Frequency", 15.f, 0.f, 60.f);
 
 Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
@@ -57,6 +59,6 @@ void Queen::OnUpdate(const pb::Message& message)
     {
         _SpawnTime = g_QueenSpawnFrequency;
         
-        new Ship(GetScene(), transform->GetPosition(), transform->GetRotation().z + 180.f);
+        new Ship(GetScene(), static_cast<World*>(GetScene())->GetPlayerAiDefinition().Evolve(), transform->GetPosition() + glm::vec3(0,0,2), transform->GetRotation().z + 180.f);
     }
 }

@@ -5,11 +5,10 @@
 #include "pixelboost/logic/component/physics/2d/userBody.h"
 #include "pixelboost/logic/component/transform/basic.h"
 #include "pixelboost/logic/message/input/touch.h"
-#include "pixelboost/logic/message/physics/collision.h"
-#include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/system/debug/render.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/ai.h"
 #include "component/health.h"
 #include "component/target.h"
 #include "game/enemy/site/spawner.h"
@@ -20,13 +19,9 @@
 #include "game/world.h"
 #include "message/target.h"
 
-Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
+Ship::Ship(pb::Scene* scene, const AiDefinition& definition, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
 {
-    _FireRate = 2.f;
-    _FireTime = _FireRate;
-    _ReturningHome = false;
-
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
     
@@ -42,19 +37,19 @@ Ship::Ship(pb::Scene* scene, glm::vec3 position, float rotation)
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
     
-    new TargetingComponent(this, 0.2f);
+    new TargetingComponent(this, 0.2f * definition.Speed);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
-    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 4.f, 1.f);
+    new HealthComponent(this, HealthComponent::kHealthTypePlayer, 2.f * definition.Defense, 1.f);
+    
+    new AiComponent(this, AiComponent::kAiTypePlayer, definition);
     
     RegisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
-    RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 Ship::~Ship()
 {
     UnregisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &Ship::OnTouch));
-    UnregisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &Ship::OnUpdate));
 }
 
 pb::Uid Ship::GetType() const
@@ -67,39 +62,10 @@ pb::Uid Ship::GetStaticType()
     return pb::TypeHash("Ship");
 }
 
-void Ship::OnUpdate(const pb::Message& message)
-{
-    const pb::UpdateMessage& updateMessage = static_cast<const pb::UpdateMessage&>(message);
-    
-    pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
-    
-    glm::vec3 position = transform->GetPosition();
-    float rotation = glm::radians(transform->GetRotation().z + 90.f);
-    
-    if (!_ReturningHome)
-    {
-        _FireTime -= updateMessage.GetDelta();
-        if (_FireTime <= 0.f)
-        {
-            _FireTime += _FireRate;
-            new Bullet(GetScene(), Bullet::kBulletSourcePlayer, 3.f, position, glm::degrees(rotation) - 90.f);
-            
-            glm::vec3 target;
-            if (!static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target))
-                static_cast<World*>(GetScene())->FindClosestTarget<Enemy>(transform->GetPosition(), target);
-            
-            GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
-        }
-    }
-}
-
 void Ship::OnTouch(const pb::Message& message)
 {
-    _ReturningHome = true;
+    AiComponent* aiComponent = GetComponentByType<AiComponent>();
+    static_cast<World*>(GetScene())->GetPlayerAiDefinition().Adapt(aiComponent->GetDefinition());
     
-    pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
-    
-    glm::vec3 target;
-    if (static_cast<World*>(GetScene())->FindClosestTarget<Queen>(transform->GetPosition(), target))
-        GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
+    Destroy();
 }

@@ -7,9 +7,11 @@
 #include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/scene.h"
 
+#include "component/ai.h"
 #include "component/health.h"
 #include "game/enemy/site/spawner.h"
 #include "game/enemy/enemy.h"
+#include "game/world.h"
 
 DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequency, "Spawner Site Spawn Frequency", 20.f, 0.f, 60.f);
 
@@ -63,6 +65,6 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
         _SpawnTime = g_SpawnerSiteSpawnFrequency;
         
         float angle = glm::radians(transform->GetRotation().z + 90.f);
-        new Enemy(GetScene(), transform->GetPosition() + glm::vec3(cos(angle)*0.3f, sin(angle)*0.3f, 0.f), transform->GetRotation().z);
+        new Enemy(GetScene(), static_cast<World*>(GetScene())->GetEnemyAiDefinition().Evolve(), transform->GetPosition() + glm::vec3(cos(angle)*0.3f, sin(angle)*0.3f, 0.f), transform->GetRotation().z);
     }
 }

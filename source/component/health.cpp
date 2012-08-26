@@ -14,7 +14,7 @@ HealthComponent::HealthComponent(pb::Entity* entity, HealthType type, float heal
     , _Armour(armour)
 {
     _Visual = new pb::EllipseComponent(GetParent());
-    _Visual->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0,0,-20)));
+    _Visual->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0,0,-1)));
     _Visual->SetSize(glm::vec2(0.5f, 0.5f) * _Health);
     _Visual->SetColor(glm::vec4(0.6,0.6,1,0.5));
     _Visual->SetSolid(true);

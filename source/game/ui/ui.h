@@ -2,6 +2,11 @@
 
 #include "pixelboost/logic/entity.h"
 
+namespace pb
+{
+    class LineComponent;
+}
+
 class GameUi : pb::Entity
 {
 public:
@@ -13,4 +18,9 @@ public:
     
 private:
     void OnUpdate(const pb::Message& message);
+    
+    pb::LineComponent* _DefenseIndicator;
+    pb::LineComponent* _SpeedIndicator;
+    pb::LineComponent* _PowerIndicator;
+    pb::LineComponent* _AvoidanceIndicator;
 };

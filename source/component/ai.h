@@ -7,17 +7,14 @@ namespace pb
     class Message;
 }
 
-enum AiType
-{
-    kAiTypePlayer,
-    kAiTypeEnemy
-};
-
 class AiDefinition
 {
 public:
     AiDefinition();
-    void Adapt(AiDefinition& definition);
+    
+    void Adapt(const AiDefinition& definition);
+    AiDefinition Evolve();
+    void Clamp();
     
 public:
     float Defense;
@@ -29,12 +26,26 @@ public:
 class AiComponent : public pb::Component
 {
 public:
-    AiComponent(pb::Entity* entity, AiType type, const AiDefinition definition);
+    enum AiType
+    {
+        kAiTypePlayer,
+        kAiTypeEnemy
+    };
+    
+    AiComponent(pb::Entity* entity, AiType type, AiDefinition definition);
     ~AiComponent();
+    
+    virtual pb::Uid GetType();
+    static pb::Uid GetStaticType();
+    
+    const AiDefinition& GetDefinition();
     
 private:
     void OnUpdate(const pb::Message& message);
     
     AiDefinition _Definition;
     AiType _Type;
+    
+    float _FireRate;
+    float _FireTime;
 };

@@ -26,7 +26,6 @@ World::World()
     new Background(this);
     
     new GameUi(this, glm::vec3(0, 10.5f, 0));
-    new GameUi(this, glm::vec3(0, -10.5f, 0));
     
     new Planet(this);
     

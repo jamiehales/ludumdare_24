@@ -15,6 +15,14 @@ template <class T> bool World::FindClosestTarget(glm::vec3 position, glm::vec3& 
             target = entityTransform->GetPosition();
             maxDistance = distance;
             status = true;
+        } else if (distance == maxDistance)
+        {
+            if (rand()%2 == 0)
+            {
+                target = entityTransform->GetPosition();
+                maxDistance = distance;
+                status = true;
+            }
         }
     }
     

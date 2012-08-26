@@ -260,12 +260,12 @@
 		1C1B4DDC15E9271D004A5EE4 /* component */ = {
 			isa = PBXGroup;
 			children = (
-				1C1B4DDD15E92727004A5EE4 /* target.cpp */,
-				1C1B4DDE15E92727004A5EE4 /* target.h */,
 				1C1B4DE615E92FF5004A5EE4 /* ai.cpp */,
 				1C1B4DE715E92FF5004A5EE4 /* ai.h */,
 				1C1B4DF415E95B99004A5EE4 /* health.cpp */,
 				1C1B4DF515E95B99004A5EE4 /* health.h */,
+				1C1B4DDD15E92727004A5EE4 /* target.cpp */,
+				1C1B4DDE15E92727004A5EE4 /* target.h */,
 			);
 			path = component;
 			sourceTree = "<group>";
