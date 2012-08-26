@@ -1,4 +1,5 @@
 #include "glm/gtc/matrix_transform.hpp"
+#include "glm/gtx/random.hpp"
 
 #include "pixelboost/logic/component/graphics/sprite.h"
 #include "pixelboost/logic/component/input/rectTouch.h"
@@ -33,6 +34,7 @@ Ship::Ship(pb::Scene* scene, const AiDefinition& definition, glm::vec3 position,
     
     glm::vec3 target;
     static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target);
+    target += glm::vec3(glm::compRand1(-5.f,5.f), glm::compRand1(-5.f,5.f),0.f);
     
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
