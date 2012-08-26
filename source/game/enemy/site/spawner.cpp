@@ -71,7 +71,7 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
         }
         else
         {
-            _ShortWave = 2;
+            _ShortWave = 4;
             _SpawnTime = g_SpawnerSiteSpawnFrequencyLong;
         }
         
