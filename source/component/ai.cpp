@@ -31,7 +31,7 @@ void AiDefinition::Adapt(const AiDefinition& definition)
 
 void AiDefinition::Devolve(float time)
 {
-    float devolutionAmount = 0.02f * time;
+    float devolutionAmount = 0.005f * time;
     
     Defense += (1.f - Defense) * devolutionAmount;
     Power += (1.f - Power) * devolutionAmount;
@@ -45,8 +45,8 @@ AiDefinition AiDefinition::Evolve()
 {
     AiDefinition definition = *this;
     
-    float evolutionNegativeAmount = 0.3f;
-    float evolutionPositiveAmount = 0.3f;
+    float evolutionNegativeAmount = 0.35f;
+    float evolutionPositiveAmount = 0.35f;
     
     definition.Defense += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Power += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);

@@ -13,14 +13,14 @@
 #include "game/enemy/enemy.h"
 #include "game/world.h"
 
-DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequencyShort, "Spawner Site Spawn FrequencyA", 4.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequencyShort, "Spawner Site Spawn FrequencyA", 5.f, 0.f, 60.f);
 DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequencyLong, "Spawner Site Spawn FrequencyB", 17.5f, 0.f, 60.f);
 
 SpawnerSite::SpawnerSite(pb::Scene* scene, pb::Uid site)
     : pb::Entity(scene, 0)
     , _SiteUid(site)
     , _SpawnTime(0)
-    , _ShortWave(2)
+    , _ShortWave(1)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     pb::TransformComponent* siteTransform = GetScene()->GetEntityById(site)->GetComponentByType<pb::TransformComponent>();
