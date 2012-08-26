@@ -13,12 +13,14 @@
 #include "game/enemy/enemy.h"
 #include "game/world.h"
 
-DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequency, "Spawner Site Spawn Frequency", 20.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequencyShort, "Spawner Site Spawn FrequencyA", 4.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_SpawnerSiteSpawnFrequencyLong, "Spawner Site Spawn FrequencyB", 17.5f, 0.f, 60.f);
 
 SpawnerSite::SpawnerSite(pb::Scene* scene, pb::Uid site)
     : pb::Entity(scene, 0)
     , _SiteUid(site)
     , _SpawnTime(0)
+    , _ShortWave(true)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     pb::TransformComponent* siteTransform = GetScene()->GetEntityById(site)->GetComponentByType<pb::TransformComponent>();
@@ -62,7 +64,12 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
 
     if (_SpawnTime <= 0.f)
     {
-        _SpawnTime = g_SpawnerSiteSpawnFrequency;
+        if (_ShortWave)
+            _SpawnTime = g_SpawnerSiteSpawnFrequencyShort;
+        else
+            _SpawnTime = g_SpawnerSiteSpawnFrequencyLong;
+        
+        _ShortWave = !_ShortWave;
         
         float angle = glm::radians(transform->GetRotation().z + 90.f);
         new Enemy(GetScene(), static_cast<World*>(GetScene())->GetEnemyAiDefinition().Evolve(), transform->GetPosition() + glm::vec3(cos(angle)*0.3f, sin(angle)*0.3f, 0.f), transform->GetRotation().z);

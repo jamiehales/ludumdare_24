@@ -14,6 +14,7 @@ public:
     void OnUpdate(const pb::Message& message);
     
 private:
+    bool _ShortWave;
     float _SpawnTime;
     pb::Uid _SiteUid;
 };
