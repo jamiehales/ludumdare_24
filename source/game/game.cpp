@@ -70,10 +70,10 @@ void Game::Transition(GameMode mode, int params)
             _CurrentScreen = new MenuScreen();
             break;
         case kGameModeGame:
-            _CurrentScreen = new GameScreen();
+            _CurrentScreen = new GameScreen(params);
             break;
         case kGameModeEnd:
-            _CurrentScreen = new EndScreen();
+            _CurrentScreen = new EndScreen(params);
             break;
     }
     

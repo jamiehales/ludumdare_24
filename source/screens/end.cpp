@@ -7,7 +7,7 @@
 #include "game/background.h"
 #include "screens/end.h"
 
-EndScreen::EndScreen()
+EndScreen::EndScreen(int params)
 {
     _Camera = new pb::OrthographicCamera();
     _Scene = new pb::Scene();

@@ -11,7 +11,7 @@ namespace pb
 class EndScreen : public pb::Screen
 {
 public:
-    EndScreen();
+    EndScreen(int params);
     ~EndScreen();
     
     virtual void Update(float time);

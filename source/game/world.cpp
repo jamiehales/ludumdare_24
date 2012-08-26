@@ -49,7 +49,7 @@ World::World(DifficultyOption difficulty)
             _Difficulty.EnemyShortWaveCount = 3;
             _Difficulty.EnemyShortWaveLengthMultiplier = 1.f;
             break;
-        case kDifficultyNormal:
+        case kDifficultyMedium:
             _Difficulty.EnemyShortWaveCount = 4;
             _Difficulty.EnemyShortWaveLengthMultiplier = 1.f;
             break;

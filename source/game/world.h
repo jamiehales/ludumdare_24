@@ -18,7 +18,7 @@ public:
     enum DifficultyOption
     {
         kDifficultyEasy,
-        kDifficultyNormal,
+        kDifficultyMedium,
         kDifficultyHard,
     };
     

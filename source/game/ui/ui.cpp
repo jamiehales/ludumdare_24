@@ -19,7 +19,7 @@ GameUi::GameUi(pb::Scene* scene, glm::vec3 position)
     pb::RectangleComponent* defenseBar = new pb::RectangleComponent(this);
     defenseBar->SetSize(glm::vec2(10,0.5));
     defenseBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, 0.5, -1)));
-    defenseBar->SetColor(glm::vec4(1,1,1,0.7));
+    defenseBar->SetColor(glm::vec4(1,1,1,0.5));
     defenseBar->SetSolid(true);
     
     pb::FontComponent* defenseText = new pb::FontComponent(this, "earthman", "DEFENSE");

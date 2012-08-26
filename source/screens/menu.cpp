@@ -5,6 +5,7 @@
 #include "pixelboost/logic/scene.h"
 
 #include "game/background.h"
+#include "menu/start.h"
 #include "menu/title.h"
 #include "screens/menu.h"
 
@@ -21,6 +22,7 @@ MenuScreen::MenuScreen()
     
     new Background(_Scene);
     new MenuTitle(_Scene);
+    new MenuStart(_Scene);
 }
 
 MenuScreen::~MenuScreen()

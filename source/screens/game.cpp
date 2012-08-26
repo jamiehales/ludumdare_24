@@ -4,10 +4,22 @@
 #include "game/world.h"
 #include "screens/game.h"
 
-GameScreen::GameScreen()
+GameScreen::GameScreen(int params)
 {
     _Camera = new pb::OrthographicCamera();
-    _World = new World(World::kDifficultyNormal);
+    
+    switch (params)
+    {
+        case 0:
+            _World = new World(World::kDifficultyEasy);
+            break;
+        case 1:
+            _World = new World(World::kDifficultyMedium);
+            break;
+        case 2:
+            _World = new World(World::kDifficultyHard);
+            break;
+    }
 
     pb::Viewport* viewport = new pb::Viewport(0, _Camera);
     viewport->SetScene(_World);

@@ -12,7 +12,7 @@ class World;
 class GameScreen : public pb::Screen
 {
 public:
-    GameScreen();
+    GameScreen(int params);
     ~GameScreen();
     
     virtual void Update(float time);

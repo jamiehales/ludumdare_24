@@ -10,7 +10,4 @@ public:
     
     virtual pb::Uid GetType() const;
     static pb::Uid GetStaticType();
-    
-private:
-    void OnTouch(const pb::Message& message);
 };
