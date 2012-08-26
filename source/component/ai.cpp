@@ -8,8 +8,10 @@
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
+#include "game/game.h"
 #include "game/world.h"
 #include "message/target.h"
+#include "system/sound.h"
 
 AiDefinition::AiDefinition()
 {
@@ -114,6 +116,9 @@ void AiComponent::OnUpdate(const pb::Message& message)
         
         float basePower = _Type == kAiTypePlayer ? 4.f : 2.f;
         
+        if (rand()%10 == 0)
+            Game::Instance()->GetSoundSystem()->PlaySound(rand()%2 ? "shoot_1" : "shoot_2", 1.f, 0.75f);
+
         new Bullet(GetScene(), _Type == kAiTypePlayer ? Bullet::kBulletSourcePlayer : Bullet::kBulletSourceEnemy, basePower * _Definition.Power, position, transform->GetRotation().z);
         
         glm::vec3 target;

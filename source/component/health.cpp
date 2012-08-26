@@ -8,6 +8,8 @@
 #include "component/health.h"
 #include "game/projectiles/bullet.h"
 #include "game/explosion.h"
+#include "game/game.h"
+#include "system/sound.h"
 
 HealthComponent::HealthComponent(pb::Entity* entity, HealthType type, float health, float armour)
     : pb::Component(entity)
@@ -53,9 +55,14 @@ void HealthComponent::OnCollision(const pb::Message& message)
             _Health -= bullet->GetPower() / _Armour;
             
             _Visual->SetSize(glm::vec2(0.5f, 0.5f) * glm::max(_Health, 0.f));
+        
+            int hitSound = rand()%3;
+            Game::Instance()->GetSoundSystem()->PlaySound(hitSound == 0 ? "hit_1" : (hitSound == 1 ? "hit_2" : "hit_3"), 1.f, 0.5f);
             
             if (_Health <= 0.f)
             {
+                Game::Instance()->GetSoundSystem()->PlaySound(rand()%2 ? "explosion_1" : "explosion_2", 1.f, 0.7f);
+                
                 pb::TransformComponent* transform = GetParent()->GetComponentByType<pb::TransformComponent>();
                 new Explosion(GetScene(), transform->GetPosition());
                 GetParent()->Destroy();

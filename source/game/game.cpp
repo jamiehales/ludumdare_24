@@ -11,8 +11,7 @@
 
 #include "game/game.h"
 #include "game/world.h"
-
-#include "fmod.hpp"
+#include "system/sound.h"
 
 Game::Game(void* viewController)
     : pb::Game(viewController)
@@ -24,35 +23,19 @@ Game::Game(void* viewController)
     GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
     GetFontRenderer()->LoadFont(pb::kFileLocationBundle, "earthman", "/data/fonts/earthman");
     
+    _SoundSystem = new SoundSystem();
     _World = new World();
     _Viewport->SetScene(_World);
     
+    _SoundSystem->LoadSound("hit_1", pb::kFileLocationBundle, "/data/audio/sfx/hit_1.wav");
+    _SoundSystem->LoadSound("hit_2", pb::kFileLocationBundle, "/data/audio/sfx/hit_2.wav");
+    _SoundSystem->LoadSound("hit_3", pb::kFileLocationBundle, "/data/audio/sfx/hit_3.wav");
+    _SoundSystem->LoadSound("shoot_1", pb::kFileLocationBundle, "/data/audio/sfx/shoot_1.wav");
+    _SoundSystem->LoadSound("shoot_2", pb::kFileLocationBundle, "/data/audio/sfx/shoot_2.wav");
+    _SoundSystem->LoadSound("explosion_1", pb::kFileLocationBundle, "/data/audio/sfx/explosion_1.wav");
+    _SoundSystem->LoadSound("explosion_2", pb::kFileLocationBundle, "/data/audio/sfx/explosion_2.wav");
+    
     pb::Renderer::Instance()->AddViewport(_Viewport);
-    
-    /*
-    FMOD::System_Create(&_FmodSystem);
-
-    _FmodSystem->init(32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL);
-    
-    pb::File* file = pb::FileSystem::Instance()->OpenFile(pb::kFileLocationBundle, "/data/audio/sfx/ting.wav");
-    std::vector<unsigned char> data;
-    file->ReadAll(data);
-    delete file;
-    
-    FMOD_RESULT result;
-    
-    FMOD_CREATESOUNDEXINFO info;
-    memset(&info, 0, sizeof(FMOD_CREATESOUNDEXINFO));
-    info.length = data.size();
-    info.cbsize = sizeof(FMOD_CREATESOUNDEXINFO);
-    result = _FmodSystem->createSound((char*)(&data[0]), FMOD_SOFTWARE|FMOD_OPENMEMORY, &info, &_FmodSound);
-    
-    _FmodSystem->createChannelGroup("noises", &_FmodGroup);
-    
-    result = _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
-    _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
-    _FmodChannel->setPaused(false);
-     */
 }
 
 Game::~Game()
@@ -63,36 +46,25 @@ Game::~Game()
     delete _Camera;
 }
 
+Game* Game::Instance()
+{
+    return static_cast<Game*>(pb::Game::Instance());
+}
+
 void Game::Update(float time)
 {
+    _SoundSystem->Update(time);
     _World->Update(time);
     
-    /*
-    static int count = 0;
-    count++;
-    
-    if (count % 5 == 0)
-    {
-        count = 0;
-        
-        FMOD_RESULT result;
-        result = _FmodSystem->playSound(FMOD_CHANNEL_FREE, _FmodSound, true, &_FmodChannel);
-        _FmodChannel->setChannelGroup(_FmodGroup);
-        _FmodGroup->setPitch((float)rand()/(float)RAND_MAX);
-        
-        _FmodChannel->setPaused(false);
-    }
-    
-    if (_FmodSystem != NULL)
-    {
-        _FmodSystem->update();
-    }
-    */
-
     pb::Game::Update(time);
 }
 
 void Game::Render()
 {
     pb::Game::Render();
+}
+
+SoundSystem* Game::GetSoundSystem()
+{
+    return _SoundSystem;
 }
