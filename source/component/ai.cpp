@@ -45,8 +45,8 @@ AiDefinition AiDefinition::Evolve()
 {
     AiDefinition definition = *this;
     
+    float evolutionNegativeAmount = 0.4f;
     float evolutionPositiveAmount = 0.5f;
-    float evolutionNegativeAmount = 0.25f;
     
     definition.Defense += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Power += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
@@ -102,6 +102,7 @@ void AiComponent::OnUpdate(const pb::Message& message)
     const pb::UpdateMessage& updateMessage = static_cast<const pb::UpdateMessage&>(message);
     
     pb::TransformComponent* transform = GetParent()->GetComponentByType<pb::TransformComponent>();
+    glm::vec3 position = transform->GetPosition();
     
     _FireTime -= updateMessage.GetDelta();
     if (_FireTime <= 0.f)
@@ -110,19 +111,42 @@ void AiComponent::OnUpdate(const pb::Message& message)
         
         float basePower = _Type == kAiTypePlayer ? 4.f : 2.f;
         
-        new Bullet(GetScene(), _Type == kAiTypePlayer ? Bullet::kBulletSourcePlayer : Bullet::kBulletSourceEnemy, basePower * _Definition.Power, transform->GetPosition(), transform->GetRotation().z);
+        new Bullet(GetScene(), _Type == kAiTypePlayer ? Bullet::kBulletSourcePlayer : Bullet::kBulletSourceEnemy, basePower * _Definition.Power, position, transform->GetRotation().z);
         
         glm::vec3 target;
         
         if (_Type == kAiTypePlayer)
         {
-            if (!static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target))
-                static_cast<World*>(GetScene())->FindClosestTarget<Enemy>(transform->GetPosition(), target);
+            glm::vec3 targetA, targetB;
+            bool targetAValid, targetBValid;
+            
+            targetAValid = static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(position, targetA);
+            targetBValid = static_cast<World*>(GetScene())->FindClosestTarget<Enemy>(position, targetB);
+            
+            if (glm::distance(position, targetB) < glm::distance(position, targetA) && targetBValid)
+            {
+                target = targetB;
+            } else {
+                target = targetA;
+            }
         } else {
-            if (!static_cast<World*>(GetScene())->FindClosestTarget<Queen>(transform->GetPosition(), target))
-                static_cast<World*>(GetScene())->FindClosestTarget<Ship>(transform->GetPosition(), target);
+            glm::vec3 targetA, targetB;
+            bool targetAValid, targetBValid;
+            
+            targetAValid = static_cast<World*>(GetScene())->FindClosestTarget<Queen>(position, targetA);
+            targetBValid = static_cast<World*>(GetScene())->FindClosestTarget<Ship>(position, targetB);
+            
+            if (glm::distance(position, targetB) < glm::distance(position, targetA) && targetBValid)
+            {
+                target = targetB;
+            } else {
+                target = targetA;
+            }
         }
         
-        GetScene()->SendMessage(GetUid(), TargetMessage(GetParent(), this, target));
+        if (glm::distance(position, target) < 5.f)
+        {
+            GetScene()->SendMessage(GetParentUid(), TargetMessage(GetParent(), this, target));
+        }
     }
 }
