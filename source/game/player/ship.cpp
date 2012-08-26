@@ -17,6 +17,7 @@
 #include "game/player/queen.h"
 #include "game/player/ship.h"
 #include "game/projectiles/bullet.h"
+#include "game/explosion.h"
 #include "game/world.h"
 #include "message/target.h"
 
@@ -69,5 +70,7 @@ void Ship::OnTouch(const pb::Message& message)
     AiComponent* aiComponent = GetComponentByType<AiComponent>();
     static_cast<World*>(GetScene())->GetPlayerAiDefinition().Adapt(aiComponent->GetDefinition());
     
+    pb::TransformComponent* transform = GetComponentByType<pb::TransformComponent>();
+    new Explosion(GetScene(), transform->GetPosition());
     Destroy();
 }

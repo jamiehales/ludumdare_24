@@ -2,10 +2,12 @@
 
 #include "pixelboost/logic/component/graphics/ellipse.h"
 #include "pixelboost/logic/component/physics/physics.h"
+#include "pixelboost/logic/component/transform.h"
 #include "pixelboost/logic/message/physics/collision.h"
 
 #include "component/health.h"
 #include "game/projectiles/bullet.h"
+#include "game/explosion.h"
 
 HealthComponent::HealthComponent(pb::Entity* entity, HealthType type, float health, float armour)
     : pb::Component(entity)
@@ -50,10 +52,12 @@ void HealthComponent::OnCollision(const pb::Message& message)
         {
             _Health -= bullet->GetPower() / _Armour;
             
-            _Visual->SetSize(glm::vec2(0.5f, 0.5f) * _Health);
+            _Visual->SetSize(glm::vec2(0.5f, 0.5f) * glm::max(_Health, 0.f));
             
             if (_Health <= 0.f)
             {
+                pb::TransformComponent* transform = GetParent()->GetComponentByType<pb::TransformComponent>();
+                new Explosion(GetScene(), transform->GetPosition());
                 GetParent()->Destroy();
             }
             
