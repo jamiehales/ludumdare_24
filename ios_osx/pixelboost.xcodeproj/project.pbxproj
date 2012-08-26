@@ -37,6 +37,8 @@
 		1C1B4E1015EA5F87004A5EE4 /* menu.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E0D15EA5F87004A5EE4 /* menu.cpp */; };
 		1C1B4E1415EA628C004A5EE4 /* startButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E1215EA628C004A5EE4 /* startButton.cpp */; };
 		1C1B4E1515EA628C004A5EE4 /* startButton.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E1215EA628C004A5EE4 /* startButton.cpp */; };
+		1C1B4E1815EA6A24004A5EE4 /* end.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E1615EA6A24004A5EE4 /* end.cpp */; };
+		1C1B4E1915EA6A24004A5EE4 /* end.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E1615EA6A24004A5EE4 /* end.cpp */; };
 		1C7CA3D2143266340031E584 /* GameKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D1143266340031E584 /* GameKit.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		1C7CA3D4143266480031E584 /* OpenAL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D3143266480031E584 /* OpenAL.framework */; };
 		1C7CA3D6143266520031E584 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1C7CA3D5143266520031E584 /* AVFoundation.framework */; };
@@ -152,6 +154,8 @@
 		1C1B4E0E15EA5F87004A5EE4 /* menu.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = menu.h; sourceTree = "<group>"; };
 		1C1B4E1215EA628C004A5EE4 /* startButton.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = startButton.cpp; sourceTree = "<group>"; };
 		1C1B4E1315EA628C004A5EE4 /* startButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = startButton.h; sourceTree = "<group>"; };
+		1C1B4E1615EA6A24004A5EE4 /* end.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = end.cpp; sourceTree = "<group>"; };
+		1C1B4E1715EA6A24004A5EE4 /* end.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = end.h; sourceTree = "<group>"; };
 		1C7CA3D1143266340031E584 /* GameKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GameKit.framework; path = System/Library/Frameworks/GameKit.framework; sourceTree = SDKROOT; };
 		1C7CA3D3143266480031E584 /* OpenAL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenAL.framework; path = System/Library/Frameworks/OpenAL.framework; sourceTree = SDKROOT; };
 		1C7CA3D5143266520031E584 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
@@ -326,6 +330,8 @@
 		1C1B4E0815EA5F6C004A5EE4 /* screens */ = {
 			isa = PBXGroup;
 			children = (
+				1C1B4E1615EA6A24004A5EE4 /* end.cpp */,
+				1C1B4E1715EA6A24004A5EE4 /* end.h */,
 				1C1B4E0915EA5F80004A5EE4 /* game.cpp */,
 				1C1B4E0A15EA5F80004A5EE4 /* game.h */,
 				1C1B4E0D15EA5F87004A5EE4 /* menu.cpp */,
@@ -746,6 +752,7 @@
 				1C1B4E0C15EA5F80004A5EE4 /* game.cpp in Sources */,
 				1C1B4E1015EA5F87004A5EE4 /* menu.cpp in Sources */,
 				1C1B4E1515EA628C004A5EE4 /* startButton.cpp in Sources */,
+				1C1B4E1915EA6A24004A5EE4 /* end.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -778,6 +785,7 @@
 				1C1B4E0B15EA5F80004A5EE4 /* game.cpp in Sources */,
 				1C1B4E0F15EA5F87004A5EE4 /* menu.cpp in Sources */,
 				1C1B4E1415EA628C004A5EE4 /* startButton.cpp in Sources */,
+				1C1B4E1815EA6A24004A5EE4 /* end.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

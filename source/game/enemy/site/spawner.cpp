@@ -66,12 +66,12 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
     {
         if (_ShortWave > 0)
         {
-            _SpawnTime = g_SpawnerSiteSpawnFrequencyShort;
+            _SpawnTime = g_SpawnerSiteSpawnFrequencyShort * static_cast<World*>(GetScene())->GetDifficulty().EnemyShortWaveLengthMultiplier;
             _ShortWave--;
         }
         else
         {
-            _ShortWave = 4;
+            _ShortWave = static_cast<World*>(GetScene())->GetDifficulty().EnemyShortWaveCount;
             _SpawnTime = g_SpawnerSiteSpawnFrequencyLong;
         }
         

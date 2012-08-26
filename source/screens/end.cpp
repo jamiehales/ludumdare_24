@@ -5,30 +5,28 @@
 #include "pixelboost/logic/scene.h"
 
 #include "game/background.h"
-#include "menu/startButton.h"
-#include "screens/menu.h"
+#include "screens/end.h"
 
-MenuScreen::MenuScreen()
+EndScreen::EndScreen()
 {
     _Camera = new pb::OrthographicCamera();
     _Scene = new pb::Scene();
     _Scene->AddSystem(new pb::BoundsRenderSystem());
     _Scene->AddSystem(new pb::DebugRenderSystem());
     
+    new Background(_Scene);
+    
     pb::Viewport* viewport = new pb::Viewport(0, _Camera);
     viewport->SetScene(_Scene);
     AddViewport(viewport);
-    
-    new Background(_Scene);
-    new MenuStartButton(_Scene);
 }
 
-MenuScreen::~MenuScreen()
+EndScreen::~EndScreen()
 {
     
 }
 
-void MenuScreen::Update(float time)
+void EndScreen::Update(float time)
 {
     _Scene->Update(time);
     

@@ -3,6 +3,7 @@
 #include "pixelboost/graphics/renderer/sprite/spriteRenderer.h"
 
 #include "game/game.h"
+#include "screens/end.h"
 #include "screens/game.h"
 #include "screens/menu.h"
 #include "system/sound.h"
@@ -70,6 +71,9 @@ void Game::Transition(GameMode mode)
             break;
         case kGameModeGame:
             _CurrentScreen = new GameScreen();
+            break;
+        case kGameModeEnd:
+            _CurrentScreen = new EndScreen();
             break;
     }
     

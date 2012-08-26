@@ -12,7 +12,7 @@
 #include "game/world.h"
 #include "system/ai.h"
 
-World::World()
+World::World(DifficultyOption difficulty)
 {
     AddSystem(new pb::BoundsRenderSystem());
     AddSystem(new pb::DebugRenderSystem());
@@ -42,11 +42,32 @@ World::World()
         float angle = i * (360.f / numSites);
         new Site(this, glm::vec3(cos(glm::radians(angle))*3.f, sin(glm::radians(angle))*3.f, 0), angle + 90.f);
     }
+    
+    switch (difficulty)
+    {
+        case kDifficultyEasy:
+            _Difficulty.EnemyShortWaveCount = 3;
+            _Difficulty.EnemyShortWaveLengthMultiplier = 1.f;
+            break;
+        case kDifficultyNormal:
+            _Difficulty.EnemyShortWaveCount = 4;
+            _Difficulty.EnemyShortWaveLengthMultiplier = 1.f;
+            break;
+        case kDifficultyHard:
+            _Difficulty.EnemyShortWaveCount = 5;
+            _Difficulty.EnemyShortWaveLengthMultiplier = 1.165f;
+            break;
+    }
 }
 
 World::~World()
 {
     
+}
+
+Difficulty World::GetDifficulty()
+{
+    return _Difficulty;
 }
 
 AiDefinition& World::GetEnemyAiDefinition()

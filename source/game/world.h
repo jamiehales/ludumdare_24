@@ -6,11 +6,26 @@
 
 class AiDefinition;
 
+struct Difficulty
+{
+    int EnemyShortWaveCount;
+    float EnemyShortWaveLengthMultiplier;
+};
+
 class World : public pb::Scene
 {
 public:
-    World();
+    enum DifficultyOption
+    {
+        kDifficultyEasy,
+        kDifficultyNormal,
+        kDifficultyHard,
+    };
+    
+    World(DifficultyOption difficulty);
     ~World();
+    
+    Difficulty GetDifficulty();
     
     AiDefinition& GetEnemyAiDefinition();
     AiDefinition& GetPlayerAiDefinition();
@@ -18,6 +33,8 @@ public:
     template <class T> bool FindClosestTarget(glm::vec3 position, glm::vec3& target);
     
 private:
+    Difficulty _Difficulty;
+    
     AiDefinition* _EnemyAi;
     AiDefinition* _PlayerAi;
 };

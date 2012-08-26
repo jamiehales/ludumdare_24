@@ -7,7 +7,7 @@
 GameScreen::GameScreen()
 {
     _Camera = new pb::OrthographicCamera();
-    _World = new World();
+    _World = new World(World::kDifficultyNormal);
 
     pb::Viewport* viewport = new pb::Viewport(0, _Camera);
     viewport->SetScene(_World);
