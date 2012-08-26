@@ -40,7 +40,7 @@ Ship::Ship(pb::Scene* scene, const AiDefinition& definition, glm::vec3 position,
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, sprite->GetSize() * 0.25f);
     physics->SetSensor(true);
     
-    new TargetingComponent(this, 0.2f * definition.Speed);
+    new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));
     
     new HealthComponent(this, HealthComponent::kHealthTypePlayer, 2.f * definition.Defense, 1.f);

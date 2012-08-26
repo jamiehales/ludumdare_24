@@ -19,7 +19,6 @@ public:
     
 public:
     float Defense;
-    float Speed;
     float Power;
     float FireRate;
 };

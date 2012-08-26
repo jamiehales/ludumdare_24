@@ -36,30 +36,14 @@ GameUi::GameUi(pb::Scene* scene, glm::vec3 position)
     _DefenseIndicator->SetColor(glm::vec4(0,0,0,0.5));
     _DefenseIndicator->SetSolid(true);
     
-    pb::RectangleComponent* speedBar = new pb::RectangleComponent(this);
-    speedBar->SetSize(glm::vec2(10,0.5));
-    speedBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, 0, -1)));
-    speedBar->SetColor(glm::vec4(1,1,1,0.5));
-    speedBar->SetSolid(true);
-    
-    pb::FontComponent* speedText = new pb::FontComponent(this, "earthman", "SPEED");
-    speedText->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.1, -0.2, 0)));
-    speedText->SetAlignment(pb::kFontAlignRight);
-    speedText->SetSize(0.5);
-    
-    _SpeedIndicator = new pb::RectangleComponent(this);
-    _SpeedIndicator->SetSize(glm::vec2(1,0.5));
-    _SpeedIndicator->SetColor(glm::vec4(0,0,0,0.5));
-    _SpeedIndicator->SetSolid(true);
-    
     pb::RectangleComponent* powerBar = new pb::RectangleComponent(this);
     powerBar->SetSize(glm::vec2(10,0.5));
-    powerBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, -0.5, -1)));
+    powerBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, 0, -1)));
     powerBar->SetColor(glm::vec4(1,1,1,0.7));
     powerBar->SetSolid(true);
     
     pb::FontComponent* powerText = new pb::FontComponent(this, "earthman", "POWER");
-    powerText->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.1, -0.7, 0)));
+    powerText->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.1, -0.2, 0)));
     powerText->SetAlignment(pb::kFontAlignRight);
     powerText->SetSize(0.5);
     
@@ -70,12 +54,12 @@ GameUi::GameUi(pb::Scene* scene, glm::vec3 position)
     
     pb::RectangleComponent* fireRateBar = new pb::RectangleComponent(this);
     fireRateBar->SetSize(glm::vec2(10,0.5));
-    fireRateBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, -1.0, -1)));
+    fireRateBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, -0.5, -1)));
     fireRateBar->SetColor(glm::vec4(1,1,1,0.5));
     fireRateBar->SetSolid(true);
     
     pb::FontComponent* fireRateText = new pb::FontComponent(this, "earthman", "FIRE RATE");
-    fireRateText->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.1, -1.2, 0)));
+    fireRateText->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.1, -0.7, 0)));
     fireRateText->SetAlignment(pb::kFontAlignRight);
     fireRateText->SetSize(0.5);
     
@@ -118,7 +102,6 @@ void GameUi::OnUpdate(const pb::Message& message)
     AiDefinition& definition = static_cast<World*>(GetScene())->GetPlayerAiDefinition();
     
     SetBarStatus(_DefenseIndicator, definition.Defense, 0.5f);
-    SetBarStatus(_SpeedIndicator, definition.Speed, 0.0f);
-    SetBarStatus(_PowerIndicator, definition.Power, -0.5f);
-    SetBarStatus(_FireRateIndicator, definition.FireRate, -1.f);
+    SetBarStatus(_PowerIndicator, definition.Power, 0.f);
+    SetBarStatus(_FireRateIndicator, definition.FireRate, -0.5f);
 }

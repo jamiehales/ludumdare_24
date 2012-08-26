@@ -17,7 +17,6 @@ AiDefinition::AiDefinition()
 {
     Defense = 1.f;
     Power = 1.f;
-    Speed = 1.f;
     FireRate = 1.f;
 }
 
@@ -25,7 +24,6 @@ void AiDefinition::Adapt(const AiDefinition& definition)
 {
     Defense += (definition.Defense - Defense) / 1.5f;
     Power += (definition.Power - Power) / 1.5f;
-    Speed += (definition.Speed - Speed) / 1.5f;
     FireRate += (definition.FireRate - FireRate) / 1.5f;
     
     Clamp();
@@ -37,7 +35,6 @@ void AiDefinition::Devolve(float time)
     
     Defense += (1.f - Defense) * devolutionAmount;
     Power += (1.f - Power) * devolutionAmount;
-    Speed += (1.f - Speed) * devolutionAmount;
     FireRate += (1.f - FireRate) * devolutionAmount;
     
     Clamp();
@@ -52,7 +49,6 @@ AiDefinition AiDefinition::Evolve()
     
     definition.Defense += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Power += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
-    definition.Speed += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.FireRate += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     
     definition.Clamp();
@@ -64,7 +60,6 @@ void AiDefinition::Clamp()
 {
     Defense = glm::clamp(Defense, 0.f, 2.f);
     Power = glm::clamp(Power, 0.f, 2.f);
-    Speed = glm::clamp(Speed, 0.f, 2.f);
     FireRate = glm::clamp(FireRate, 0.f, 2.f);
 }
 
