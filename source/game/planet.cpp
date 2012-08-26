@@ -1,4 +1,6 @@
-#include "pixelboost/logic/component/graphics/ellipse.h"
+#include "glm/gtc/matrix_transform.hpp"
+
+#include "pixelboost/logic/component/graphics/sprite.h"
 #include "pixelboost/logic/component/transform/basic.h"
 
 #include "game/planet.h"
@@ -9,9 +11,8 @@ Planet::Planet(pb::Scene* scene)
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetPosition(glm::vec3(0,0,-5));
     
-    pb::EllipseComponent* ellipse = new pb::EllipseComponent(this);
-    ellipse->SetSize(glm::vec2(6,6));
-    ellipse->SetSolid(true);
+    pb::SpriteComponent* sprite = new pb::SpriteComponent(this, "planet");
+    sprite->SetLocalTransform(glm::scale(glm::mat4x4(), glm::vec3(0.55,0.55,1)));
 }
 
 Planet::~Planet()
