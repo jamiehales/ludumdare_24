@@ -39,13 +39,13 @@ GameUi::GameUi(pb::Scene* scene, glm::vec3 position)
     _PowerIndicator->SetLine(glm::vec3(0,0.25,0), glm::vec3(0,-0.25,0));
     _PowerIndicator->SetColor(glm::vec4(0,1,0,1));
     
-    pb::RectangleComponent* avoidanceBar = new pb::RectangleComponent(this);
-    avoidanceBar->SetSize(glm::vec2(10,0.5));
-    avoidanceBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, -1.0, 0)));
+    pb::RectangleComponent* fireRateBar = new pb::RectangleComponent(this);
+    fireRateBar->SetSize(glm::vec2(10,0.5));
+    fireRateBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, -1.0, 0)));
     
-    _AvoidanceIndicator = new pb::LineComponent(this);
-    _AvoidanceIndicator->SetLine(glm::vec3(0,0.25,0), glm::vec3(0,-0.25,0));
-    _AvoidanceIndicator->SetColor(glm::vec4(1,1,0,1));
+    _FireRateIndicator = new pb::LineComponent(this);
+    _FireRateIndicator->SetLine(glm::vec3(0,0.25,0), glm::vec3(0,-0.25,0));
+    _FireRateIndicator->SetColor(glm::vec4(1,1,0,1));
     
     RegisterMessageHandler<pb::UpdateMessage>(pb::Entity::MessageHandler(this, &GameUi::OnUpdate));
 }
@@ -72,5 +72,5 @@ void GameUi::OnUpdate(const pb::Message& message)
     _DefenseIndicator->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.f + definition.Defense * 5.f, 0.5f, 0.f)));
     _SpeedIndicator->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.f + definition.Speed * 5.f, 0.f, 0.f)));
     _PowerIndicator->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.f + definition.Power * 5.f, -0.5f, 0.f)));
-    _AvoidanceIndicator->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.f + definition.Avoidance * 5.f, -1.f, 0.f)));
+    _FireRateIndicator->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(-5.f + definition.FireRate * 5.f, -1.f, 0.f)));
 }

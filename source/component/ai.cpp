@@ -16,15 +16,15 @@ AiDefinition::AiDefinition()
     Defense = 1.f;
     Power = 1.f;
     Speed = 1.f;
-    Avoidance = 1.f;
+    FireRate = 1.f;
 }
 
 void AiDefinition::Adapt(const AiDefinition& definition)
 {
-    Defense += (definition.Defense - Defense) / 2.f;
-    Power += (definition.Power - Power) / 2.f;
-    Speed += (definition.Speed - Speed) / 2.f;
-    Avoidance += (definition.Avoidance - Avoidance) / 2.f;
+    Defense += (definition.Defense - Defense) / 1.5f;
+    Power += (definition.Power - Power) / 1.5f;
+    Speed += (definition.Speed - Speed) / 1.5f;
+    FireRate += (definition.FireRate - FireRate) / 1.5f;
     
     Clamp();
 }
@@ -36,7 +36,7 @@ void AiDefinition::Devolve(float time)
     Defense += (1.f - Defense) * devolutionAmount;
     Power += (1.f - Power) * devolutionAmount;
     Speed += (1.f - Speed) * devolutionAmount;
-    Avoidance += (1.f - Avoidance) * devolutionAmount;
+    FireRate += (1.f - FireRate) * devolutionAmount;
     
     Clamp();
 }
@@ -51,7 +51,7 @@ AiDefinition AiDefinition::Evolve()
     definition.Defense += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Power += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Speed += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
-    definition.Avoidance += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
+    definition.FireRate += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     
     definition.Clamp();
     
@@ -63,7 +63,7 @@ void AiDefinition::Clamp()
     Defense = glm::clamp(Defense, 0.f, 2.f);
     Power = glm::clamp(Power, 0.f, 2.f);
     Speed = glm::clamp(Speed, 0.f, 2.f);
-    Avoidance = glm::clamp(Avoidance, 0.f, 2.f);
+    FireRate = glm::clamp(FireRate, 0.f, 2.f);
 }
 
 AiComponent::AiComponent(pb::Entity* entity, AiType type, AiDefinition definition)
@@ -71,7 +71,7 @@ AiComponent::AiComponent(pb::Entity* entity, AiType type, AiDefinition definitio
     , _Definition(definition)
     , _Type(type)
 {
-    _FireRate = _Type == kAiTypePlayer ? 2.f : 4.f;
+    _FireRate = (_Type == kAiTypePlayer ? 2.f : 4.f) / definition.FireRate;
     _FireTime = _FireRate;
     
     GetParent()->RegisterMessageHandler<pb::UpdateMessage>(pb::Entity::MessageHandler(this, &AiComponent::OnUpdate));

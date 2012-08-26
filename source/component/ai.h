@@ -21,7 +21,7 @@ public:
     float Defense;
     float Speed;
     float Power;
-    float Avoidance;
+    float FireRate;
 };
 
 class AiComponent : public pb::Component

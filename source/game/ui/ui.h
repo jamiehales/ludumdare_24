@@ -22,5 +22,5 @@ private:
     pb::LineComponent* _DefenseIndicator;
     pb::LineComponent* _SpeedIndicator;
     pb::LineComponent* _PowerIndicator;
-    pb::LineComponent* _AvoidanceIndicator;
+    pb::LineComponent* _FireRateIndicator;
 };
