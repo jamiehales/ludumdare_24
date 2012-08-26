@@ -11,6 +11,7 @@
 #import "MainView.h"
 
 float desiredFps = 60.f;
+float speedupFactor = 2.f;
 
 /* keycodes for keys that are independent of keyboard layout*/
 enum {
@@ -92,7 +93,7 @@ enum {
 
 - (void)onRedrawTimer
 {
-    pb::Game::Instance()->Update(1.f/desiredFps);
+    pb::Game::Instance()->Update(1.f/(desiredFps/speedupFactor));
     [self setNeedsDisplay:true];
 }
 
