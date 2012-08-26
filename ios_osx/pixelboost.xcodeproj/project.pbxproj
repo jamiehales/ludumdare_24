@@ -23,8 +23,6 @@
 		1C1B4DF315E94FFB004A5EE4 /* background.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF015E94FF9004A5EE4 /* background.cpp */; };
 		1C1B4DF615E95B9A004A5EE4 /* health.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF415E95B99004A5EE4 /* health.cpp */; };
 		1C1B4DF715E95B9A004A5EE4 /* health.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF415E95B99004A5EE4 /* health.cpp */; };
-		1C1B4DF915E96B39004A5EE4 /* world.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF815E96B39004A5EE4 /* world.inl */; };
-		1C1B4DFA15E96B39004A5EE4 /* world.inl in Resources */ = {isa = PBXBuildFile; fileRef = 1C1B4DF815E96B39004A5EE4 /* world.inl */; };
 		1C1B4DFE15E9AF57004A5EE4 /* ai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DFC15E9AF57004A5EE4 /* ai.cpp */; };
 		1C1B4DFF15E9AF57004A5EE4 /* ai.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4DFC15E9AF57004A5EE4 /* ai.cpp */; };
 		1C1B4E0215E9B941004A5EE4 /* explosion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 1C1B4E0015E9B93E004A5EE4 /* explosion.cpp */; };
@@ -120,7 +118,7 @@
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 10;
 			files = (
 				1CB852EC15E83A1A00012A80 /* libfmodex.dylib in CopyFiles */,
 			);
@@ -621,8 +619,9 @@
 			buildPhases = (
 				1CB8523D15E82D9D00012A80 /* Sources */,
 				1CB8523E15E82D9D00012A80 /* Frameworks */,
-				1CB852EB15E83A0500012A80 /* CopyFiles */,
 				1CB8523F15E82D9D00012A80 /* Resources */,
+				1CB852EB15E83A0500012A80 /* CopyFiles */,
+				1C1B4E2315EA92F4004A5EE4 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -716,7 +715,6 @@
 				1CB8528E15E82DDF00012A80 /* InfoPlist.strings in Resources */,
 				1CB8528F15E82DDF00012A80 /* MainMenu.xib in Resources */,
 				1CA96EDF15E84ADD00FC1EF2 /* data in Resources */,
-				1C1B4DFA15E96B39004A5EE4 /* world.inl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,11 +727,26 @@
 				1CB8527915E82DD500012A80 /* MainWindow.xib in Resources */,
 				1CB8527A15E82DD500012A80 /* pixelboostViewController.xib in Resources */,
 				1CB8527B15E82DD500012A80 /* MainWindow-iPad.xib in Resources */,
-				1C1B4DF915E96B39004A5EE4 /* world.inl in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		1C1B4E2315EA92F4004A5EE4 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "install_name_tool -change ./libfmodex.dylib @rpath/libfmodex.dylib $TARGET_BUILD_DIR/$EXECUTABLE_FOLDER_PATH/$EXECUTABLE_NAME";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		1CB8523D15E82D9D00012A80 /* Sources */ = {
@@ -1006,6 +1019,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "osx/osx-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../libs/fmod/ios/lib\"",
@@ -1039,11 +1053,13 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					PIXELBOOST_PLATFORM_OSX,
 					PIXELBOOST_DISABLE_TESTFLIGHT,
+					PIXELBOOST_BUILD_RELEASE,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "osx/osx-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../libs/fmod/ios/lib\"",
@@ -1082,6 +1098,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "osx/osx-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../libs/fmod/ios/lib\"",
@@ -1120,6 +1137,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				INFOPLIST_FILE = "osx/osx-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "@loader_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SRCROOT)/../libs/fmod/ios/lib\"",
@@ -1176,6 +1194,7 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					PIXELBOOST_PLATFORM_IOS,
 					PIXELBOOST_DISABLE_TESTFLIGHT,
+					PIXELBOOST_BUILD_RELEASE,
 				);
 				GCC_WARN_ABOUT_MISSING_PROTOTYPES = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
