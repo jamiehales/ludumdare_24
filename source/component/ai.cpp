@@ -45,8 +45,8 @@ AiDefinition AiDefinition::Evolve()
 {
     AiDefinition definition = *this;
     
-    float evolutionNegativeAmount = 0.4f;
-    float evolutionPositiveAmount = 0.5f;
+    float evolutionNegativeAmount = 0.3f;
+    float evolutionPositiveAmount = 0.3f;
     
     definition.Defense += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
     definition.Power += glm::compRand1(-evolutionNegativeAmount, evolutionPositiveAmount);
