@@ -19,7 +19,7 @@ Bullet::Bullet(pb::Scene* scene, BulletSource source, float power, glm::vec3 pos
     
     pb::RectangleComponent* rectangle = new pb::RectangleComponent(this);
     rectangle->SetSize(bulletSize);
-    rectangle->SetColor(glm::vec4(1,1,1,1));
+    rectangle->SetColor(source == kBulletSourceEnemy ? glm::vec4(1,0,0,1) : glm::vec4(0,1,0,1));
     rectangle->SetSolid(true);
     
     pb::PhysicsUserBody2DComponent* physicsBody = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, bulletSize);
