@@ -12,13 +12,13 @@
 #include "game/projectiles/bullet.h"
 #include "game/world.h"
 
-DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequencyShort, "Queen Spawn Frequency Short", 6.f, 0.f, 60.f);
+DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequencyShort, "Queen Spawn Frequency Short", 4.f, 0.f, 60.f);
 DEFINE_DEBUG_FLOAT(g_QueenSpawnFrequencyLong, "Queen Spawn Frequency Long", 15.f, 0.f, 60.f);
 
 Queen::Queen(pb::Scene* scene, glm::vec3 position, float rotation)
     : pb::Entity(scene, 0)
     , _SpawnTime(0)
-    , _ShortWave(true)
+    , _ShortWave(2)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetTransform(position, glm::vec3(0,0,rotation), glm::vec3(1,1,1));
@@ -59,12 +59,16 @@ void Queen::OnUpdate(const pb::Message& message)
     
     if (_SpawnTime <= 0.f)
     {
-        if (_ShortWave)
+        if (_ShortWave > 0)
+        {
             _SpawnTime = g_QueenSpawnFrequencyShort;
+            _ShortWave--;
+        }
         else
+        {
+            _ShortWave = 2;
             _SpawnTime = g_QueenSpawnFrequencyLong;
-        
-        _ShortWave = !_ShortWave;
+        }
         
         new Ship(GetScene(), static_cast<World*>(GetScene())->GetPlayerAiDefinition().Evolve(), transform->GetPosition() + glm::vec3(0,0,2), transform->GetRotation().z + 180.f);
     }

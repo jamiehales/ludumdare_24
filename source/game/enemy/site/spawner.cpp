@@ -20,7 +20,7 @@ SpawnerSite::SpawnerSite(pb::Scene* scene, pb::Uid site)
     : pb::Entity(scene, 0)
     , _SiteUid(site)
     , _SpawnTime(0)
-    , _ShortWave(true)
+    , _ShortWave(2)
 {
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     pb::TransformComponent* siteTransform = GetScene()->GetEntityById(site)->GetComponentByType<pb::TransformComponent>();
@@ -64,12 +64,16 @@ void SpawnerSite::OnUpdate(const pb::Message& message)
 
     if (_SpawnTime <= 0.f)
     {
-        if (_ShortWave)
+        if (_ShortWave > 0)
+        {
             _SpawnTime = g_SpawnerSiteSpawnFrequencyShort;
+            _ShortWave--;
+        }
         else
+        {
+            _ShortWave = 2;
             _SpawnTime = g_SpawnerSiteSpawnFrequencyLong;
-        
-        _ShortWave = !_ShortWave;
+        }
         
         float angle = glm::radians(transform->GetRotation().z + 90.f);
         new Enemy(GetScene(), static_cast<World*>(GetScene())->GetEnemyAiDefinition().Evolve(), transform->GetPosition() + glm::vec3(cos(angle)*0.3f, sin(angle)*0.3f, 0.f), transform->GetRotation().z);

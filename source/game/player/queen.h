@@ -16,5 +16,5 @@ private:
     void OnUpdate(const pb::Message& message);
     
     float _SpawnTime;
-    bool _ShortWave;
+    int _ShortWave;
 };
