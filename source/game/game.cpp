@@ -3,6 +3,7 @@
 #include "pixelboost/graphics/camera/viewport.h"
 #include "pixelboost/graphics/device/device.h"
 #include "pixelboost/graphics/renderer/common/renderer.h"
+#include "pixelboost/graphics/renderer/font/fontRenderer.h"
 #include "pixelboost/graphics/renderer/sprite/spriteRenderer.h"
 #include "pixelboost/logic/component/graphics/rectangle.h"
 #include "pixelboost/logic/entity.h"
@@ -21,6 +22,7 @@ Game::Game(void* viewController)
     _Viewport = new pb::Viewport(0, _Camera);
     
     GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
+    GetFontRenderer()->LoadFont(pb::kFileLocationBundle, "earthman", "/data/fonts/earthman");
     
     _World = new World();
     _Viewport->SetScene(_World);
