@@ -31,7 +31,7 @@ Ship::Ship(pb::Scene* scene, const AiDefinition& definition, glm::vec3 position,
     sprite->SetLocalTransform(glm::scale(glm::mat4x4(), glm::vec3(1,1,1)*0.25f));
     
     pb::RectTouchComponent* touch = new pb::RectTouchComponent(this);
-    touch->SetSize(glm::vec2(1.f, 1.f));
+    touch->SetSize(glm::vec2(0.7f, 0.7f));
     
     glm::vec3 target;
     static_cast<World*>(GetScene())->FindClosestTarget<SpawnerSite>(transform->GetPosition(), target);
