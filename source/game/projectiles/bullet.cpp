@@ -75,6 +75,6 @@ void Bullet::OnUpdate(const pb::Message& message)
     glm::vec2 bulletSize(0.06, 0.14 * _Power);
     rectangle->SetSize(bulletSize);
     
-    if (_Power < 0.f)
+    if (_Power < 0.2f)
         Destroy();
 }
