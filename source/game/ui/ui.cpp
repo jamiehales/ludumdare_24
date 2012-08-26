@@ -16,6 +16,10 @@ GameUi::GameUi(pb::Scene* scene, glm::vec3 position)
     pb::TransformComponent* transform = new pb::BasicTransformComponent(this);
     transform->SetPosition(position);
     
+    pb::FontComponent* title = new pb::FontComponent(this, "earthman", "HiveMind:EVOLUTION");
+    title->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0.15f, 0.8, 0)));
+    title->SetSize(0.8f);
+    
     pb::RectangleComponent* defenseBar = new pb::RectangleComponent(this);
     defenseBar->SetSize(glm::vec2(10,0.5));
     defenseBar->SetLocalTransform(glm::translate(glm::mat4x4(), glm::vec3(0, 0.5, -1)));
