@@ -31,7 +31,7 @@ void AiDefinition::Adapt(const AiDefinition& definition)
 
 void AiDefinition::Devolve(float time)
 {
-    float devolutionAmount = 0.01f * time;
+    float devolutionAmount = 0.02f * time;
     
     Defense += (1.f - Defense) * devolutionAmount;
     Power += (1.f - Power) * devolutionAmount;
