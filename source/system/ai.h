@@ -12,4 +12,7 @@ public:
     static pb::Uid GetStaticType();
     
     virtual void Update(pb::Scene* scene, float time);
+    
+private:
+    bool _New;
 };

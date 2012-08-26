@@ -5,6 +5,7 @@
 #include "pixelboost/logic/scene.h"
 
 #include "game/background.h"
+#include "menu/end.h"
 #include "screens/end.h"
 
 EndScreen::EndScreen(int params)
@@ -15,6 +16,7 @@ EndScreen::EndScreen(int params)
     _Scene->AddSystem(new pb::DebugRenderSystem());
     
     new Background(_Scene);
+    new EndInfo(_Scene, params);
     
     pb::Viewport* viewport = new pb::Viewport(0, _Camera);
     viewport->SetScene(_Scene);

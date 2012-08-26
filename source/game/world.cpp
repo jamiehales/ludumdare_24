@@ -4,6 +4,7 @@
 #include "pixelboost/logic/scene.h"
 
 #include "component/ai.h"
+#include "game/enemy/site/spawner.h"
 #include "game/enemy/site.h"
 #include "game/player/queen.h"
 #include "game/ui/ui.h"

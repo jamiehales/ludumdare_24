@@ -35,7 +35,7 @@ MenuStart::MenuStart(pb::Scene* scene)
 
 MenuStart::~MenuStart()
 {
-    
+    UnregisterMessageHandler<pb::TouchDownMessage>(MessageHandler(this, &MenuStart::OnTouch));
 }
 
 pb::Uid MenuStart::GetType() const
