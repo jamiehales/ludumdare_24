@@ -13,6 +13,7 @@ public:
     AiDefinition();
     
     void Adapt(const AiDefinition& definition);
+    void Devolve(float time);
     AiDefinition Evolve();
     void Clamp();
     

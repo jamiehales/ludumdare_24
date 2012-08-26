@@ -10,11 +10,13 @@
 #include "game/background.h"
 #include "game/planet.h"
 #include "game/world.h"
+#include "system/ai.h"
 
 World::World()
 {
     AddSystem(new pb::BoundsRenderSystem());
     AddSystem(new pb::DebugRenderSystem());
+    AddSystem(new AiSystem());
     
     pb::PhysicsSystem2D* physicsSystem = new pb::PhysicsSystem2D();
     //physicsSystem->SetDebugRender(true);

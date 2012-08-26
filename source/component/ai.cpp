@@ -29,6 +29,18 @@ void AiDefinition::Adapt(const AiDefinition& definition)
     Clamp();
 }
 
+void AiDefinition::Devolve(float time)
+{
+    float devolutionAmount = 0.01f * time;
+    
+    Defense += (1.f - Defense) * devolutionAmount;
+    Power += (1.f - Power) * devolutionAmount;
+    Speed += (1.f - Speed) * devolutionAmount;
+    Avoidance += (1.f - Avoidance) * devolutionAmount;
+    
+    Clamp();
+}
+
 AiDefinition AiDefinition::Evolve()
 {
     AiDefinition definition = *this;
