@@ -1,10 +1,12 @@
 #pragma once
 
+#include "glm/glm.hpp";
+
 #include "pixelboost/logic/entity.h"
 
 namespace pb
 {
-    class LineComponent;
+    class RectangleComponent;
 }
 
 class GameUi : pb::Entity
@@ -17,10 +19,11 @@ public:
     static pb::Uid GetStaticType();
     
 private:
+    void SetBarStatus(pb::RectangleComponent* rect, float value, float offset);
     void OnUpdate(const pb::Message& message);
     
-    pb::LineComponent* _DefenseIndicator;
-    pb::LineComponent* _SpeedIndicator;
-    pb::LineComponent* _PowerIndicator;
-    pb::LineComponent* _FireRateIndicator;
+    pb::RectangleComponent* _DefenseIndicator;
+    pb::RectangleComponent* _SpeedIndicator;
+    pb::RectangleComponent* _PowerIndicator;
+    pb::RectangleComponent* _FireRateIndicator;
 };
