@@ -2,16 +2,7 @@
 
 #include "pixelboost/framework/game.h"
 
-namespace pb
-{
-    class OrthographicCamera; 
-    class RenderLayer;
-    class Scene;
-    class Viewport;
-}
-
 class SoundSystem;
-class World;
 
 class Game : public pb::Game
 {
@@ -26,13 +17,16 @@ public:
     
     SoundSystem* GetSoundSystem();
     
+    enum GameMode
+    {
+        kGameModeMenu,
+        kGameModeGame,
+        kGameModeEnd,
+    };
+    
+    void Transition(GameMode mode);
+    
 private:
-    pb::OrthographicCamera* _Camera;
-    pb::Viewport* _Viewport;
-    
-    pb::RenderLayer* _Layer;
-    
-    World* _World;
-    
+    pb::Screen* _CurrentScreen;
     SoundSystem* _SoundSystem;
 };
