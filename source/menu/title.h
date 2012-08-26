@@ -2,11 +2,11 @@
 
 #include "pixelboost/logic/entity.h"
 
-class MenuStartButton : pb::Entity
+class MenuTitle : pb::Entity
 {
 public:
-    MenuStartButton(pb::Scene* scene);
-    ~MenuStartButton();
+    MenuTitle(pb::Scene* scene);
+    ~MenuTitle();
     
     virtual pb::Uid GetType() const;
     static pb::Uid GetStaticType();

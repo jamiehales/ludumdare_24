@@ -56,7 +56,7 @@ SoundSystem* Game::GetSoundSystem()
     return _SoundSystem;
 }
 
-void Game::Transition(GameMode mode)
+void Game::Transition(GameMode mode, int params)
 {
     if (_CurrentScreen)
     {

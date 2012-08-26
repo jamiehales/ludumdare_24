@@ -24,7 +24,7 @@ public:
         kGameModeEnd,
     };
     
-    void Transition(GameMode mode);
+    void Transition(GameMode mode, int params = 0);
     
 private:
     pb::Screen* _CurrentScreen;
