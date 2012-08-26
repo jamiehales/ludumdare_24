@@ -73,6 +73,7 @@ AiComponent::AiComponent(pb::Entity* entity, AiType type, AiDefinition definitio
 {
     _FireRate = (_Type == kAiTypePlayer ? 2.f : 4.f) / definition.FireRate;
     _FireTime = _FireRate;
+    _Warmup = 15.f;
     
     GetParent()->RegisterMessageHandler<pb::UpdateMessage>(pb::Entity::MessageHandler(this, &AiComponent::OnUpdate));
 }
@@ -103,6 +104,8 @@ void AiComponent::OnUpdate(const pb::Message& message)
     
     pb::TransformComponent* transform = GetParent()->GetComponentByType<pb::TransformComponent>();
     glm::vec3 position = transform->GetPosition();
+    
+    _Warmup = glm::max(0.f, _Warmup - updateMessage.GetDelta());
     
     _FireTime -= updateMessage.GetDelta();
     if (_FireTime <= 0.f)
@@ -143,8 +146,8 @@ void AiComponent::OnUpdate(const pb::Message& message)
                 target = targetA;
             }
         }
-        
-        if (glm::distance(position, target) < 5.f)
+
+        if (_Warmup <= 0.f || glm::distance(target, position) < 5.f)
         {
             GetScene()->SendMessage(GetParentUid(), TargetMessage(GetParent(), this, target));
         }

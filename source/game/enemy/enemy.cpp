@@ -30,7 +30,7 @@ Enemy::Enemy(pb::Scene* scene, const AiDefinition& definition, glm::vec3 positio
     
     glm::vec3 target;
     static_cast<World*>(scene)->FindClosestTarget<Queen>(transform->GetPosition(), target);
-    target += glm::vec3(glm::compRand1(-5.f,5.f), glm::compRand1(-5.f,5.f),0.f);
+    target += glm::vec3(glm::compRand1(-10.f,10.f), glm::compRand1(-10.f,10.f),0.f);
     
     new TargetingComponent(this, 0.2f);
     GetScene()->SendMessage(GetUid(), TargetMessage(this, 0, target));

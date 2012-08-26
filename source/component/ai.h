@@ -49,4 +49,5 @@ private:
     
     float _FireRate;
     float _FireTime;
+    float _Warmup;
 };
