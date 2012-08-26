@@ -35,7 +35,7 @@ SpawnerSite::SpawnerSite(pb::Scene* scene, pb::Uid site)
     pb::PhysicsUserBody2DComponent* physics = new pb::PhysicsUserBody2DComponent(this, pb::PhysicsUserBody2DComponent::kBodyTypeDynamic, pb::PhysicsUserBody2DComponent::kBodyShapeRect, glm::vec2(0.5,0.2)/*sprite->GetSize()*/);
     physics->SetSensor(true);
     
-    new HealthComponent(this, HealthComponent::kHealthTypeEnemy, 7.f, 15.f);
+    new HealthComponent(this, HealthComponent::kHealthTypeEnemy, 7.f, 7.f);
     
     RegisterMessageHandler<pb::UpdateMessage>(MessageHandler(this, &SpawnerSite::OnUpdate));
 }
