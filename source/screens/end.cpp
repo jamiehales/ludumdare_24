@@ -16,7 +16,7 @@ EndScreen::EndScreen(int params)
     _Scene->AddSystem(new pb::DebugRenderSystem());
     
     new Background(_Scene);
-    new EndInfo(_Scene, params);
+    new EndInfo(_Scene, static_cast<bool>(params));
     
     pb::Viewport* viewport = new pb::Viewport(0, _Camera);
     viewport->SetScene(_Scene);

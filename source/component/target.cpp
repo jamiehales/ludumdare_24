@@ -1,3 +1,5 @@
+#include <math.h>
+
 #include "pixelboost/logic/component/transform.h"
 #include "pixelboost/logic/message/update.h"
 #include "pixelboost/logic/entity.h"

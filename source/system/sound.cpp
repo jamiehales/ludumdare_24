@@ -6,7 +6,50 @@ SoundSystem::SoundSystem()
 {
     FMOD::System_Create(&_System);
     
+#ifndef PIXELBOOST_PLATFORM_WINDOWS
     _System->init(32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL);
+#else
+    FMOD_RESULT      result;
+    int              key, numdrivers;
+    bool             listenerflag = true;
+    unsigned int     version;
+    FMOD_SPEAKERMODE speakermode;
+    FMOD_CAPS        caps;
+    char             name[256];
+
+	result = _System->getNumDrivers(&numdrivers);
+
+    if (numdrivers == 0)
+    {
+        result = _System->setOutput(FMOD_OUTPUTTYPE_NOSOUND);
+    }
+    else
+    {
+        result = _System->getDriverCaps(0, &caps, 0, &speakermode);
+
+        result = _System->setSpeakerMode(speakermode);       /* Set the user selected speaker mode. */
+
+        if (caps & FMOD_CAPS_HARDWARE_EMULATED)             /* The user has the 'Acceleration' slider set to off!  This is really bad for latency!. */
+        {                                                   /* You might want to warn the user about this. */
+            result = _System->setDSPBufferSize(1024, 10);
+        }
+
+        result = _System->getDriverInfo(0, name, 256, 0);
+
+        if (strstr(name, "SigmaTel"))   /* Sigmatel sound devices crackle for some reason if the format is PCM 16bit.  PCM floating point output seems to solve it. */
+        {
+            result = _System->setSoftwareFormat(48000, FMOD_SOUND_FORMAT_PCMFLOAT, 0,0, FMOD_DSP_RESAMPLER_LINEAR);
+        }
+    }
+
+    result = _System->init(100, FMOD_INIT_NORMAL, 0);
+    if (result == FMOD_ERR_OUTPUT_CREATEBUFFER)         /* Ok, the speaker mode selected isn't supported by this soundcard.  Switch it back to stereo... */
+    {
+        result = _System->setSpeakerMode(FMOD_SPEAKERMODE_STEREO);
+            
+        result = _System->init(100, FMOD_INIT_NORMAL, 0);/* ... and re-init. */
+    }
+#endif
 }
 
 SoundSystem::~SoundSystem()
@@ -24,6 +67,10 @@ void SoundSystem::LoadSound(const std::string& name, pb::FileLocation fileLocati
     FMOD_RESULT result;
     
     pb::File* file = pb::FileSystem::Instance()->OpenFile(fileLocation, filename);
+
+	if (!file)
+		return;
+
     std::vector<unsigned char> data;
     file->ReadAll(data);
     delete file;
@@ -41,6 +88,9 @@ void SoundSystem::LoadSound(const std::string& name, pb::FileLocation fileLocati
 
 void SoundSystem::PlaySound(const std::string& name, float pitch, float volume)
 {
+	if (_Sounds.find(name) == _Sounds.end())
+		return;
+
     FMOD::Sound* sound = _Sounds[name];
     FMOD::Channel* channel;
     
@@ -51,6 +101,9 @@ void SoundSystem::PlaySound(const std::string& name, float pitch, float volume)
 
 void SoundSystem::PlayMusic(const std::string& name)
 {
+	if (_Sounds.find(name) == _Sounds.end())
+		return;
+
     FMOD::Sound* sound = _Sounds[name];
     FMOD::Channel* channel;
     

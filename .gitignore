@@ -11,3 +11,10 @@ xcuserdata/
 /android/jni/obj/
 /resources/vectors/exported/
 QuickLook
+/windows/Release/
+/windows/pixelboost.vcxproj.user
+/windows/pixelboost.v11.suo
+/windows/pixelboost.suo
+/windows/obj/
+/windows/data/
+/builds/
