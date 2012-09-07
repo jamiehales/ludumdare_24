@@ -1,13 +1,33 @@
+#include <cstring>
+
 #include "fmod.hpp"
 
 #include "system/sound.h"
+
+#if defined(PIXELBOOST_PLATFORM_NACL)
+    #include "ppapi/cpp/instance.h"
+    #include "ppapi/c/pp_instance.h"
+
+    #include "ppapi/c/ppp_graphics_3d.h"
+    #include "ppapi/lib/gl/gles2/gl2ext_ppapi.h"
+
+    #include "fmodnacl.h"
+
+    #include "game/game.h"
+#endif
 
 SoundSystem::SoundSystem()
 {
     FMOD::System_Create(&_System);
     
-#ifndef PIXELBOOST_PLATFORM_WINDOWS
-    _System->init(32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, NULL);
+#if defined(PIXELBOOST_PLATFORM_WINDOWS)
+    _System->init(32, FMOD_INIT_NORMAL | FMOD_INIT_ENABLE_PROFILE, 0);
+#elif defined(PIXELBOOST_PLATFORM_NACL)
+    FMOD_NACL_EXTRADRIVERDATA extraDriverData;
+    memset(&extraDriverData, 0, sizeof(FMOD_NACL_EXTRADRIVERDATA));
+    extraDriverData.instance = static_cast<pp::Instance*>(Game::Instance()->GetViewController())->pp_instance();
+        
+    _System->init(32, FMOD_INIT_NORMAL, &extraDriverData);
 #else
     FMOD_RESULT      result;
     int              key, numdrivers;

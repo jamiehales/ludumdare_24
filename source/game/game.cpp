@@ -8,13 +8,15 @@
 #include "screens/menu.h"
 #include "system/sound.h"
 
+#include "pixelboost/debug/log.h"
+
 Game::Game(void* viewController)
     : pb::Game(viewController)
     , _CurrentScreen(0)
 {
     GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
     GetFontRenderer()->LoadFont(pb::kFileLocationBundle, "earthman", "/data/fonts/earthman");
-    
+
     _SoundSystem = new SoundSystem();
     
     _SoundSystem->LoadSound("hit_1", pb::kFileLocationBundle, "/data/audio/sfx/hit_1.wav");
