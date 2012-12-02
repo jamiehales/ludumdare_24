@@ -30,9 +30,7 @@ SoundSystem::SoundSystem()
     _System->init(32, FMOD_INIT_NORMAL, &extraDriverData);
 #else
     FMOD_RESULT      result;
-    int              key, numdrivers;
-    bool             listenerflag = true;
-    unsigned int     version;
+    int              numdrivers;
     FMOD_SPEAKERMODE speakermode;
     FMOD_CAPS        caps;
     char             name[256];
