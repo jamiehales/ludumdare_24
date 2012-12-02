@@ -14,7 +14,7 @@ Game::Game(void* viewController)
     : pb::Engine(viewController)
     , _CurrentScreen(0)
 {
-    GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
+    GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game", "jpa");
     GetFontRenderer()->LoadFont(pb::kFileLocationBundle, "earthman", "/data/fonts/earthman");
 
     _SoundSystem = new SoundSystem();

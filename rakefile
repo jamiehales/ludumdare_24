@@ -51,7 +51,7 @@ end
 namespace :assets do
   task :build => [:engine_data, :audio, :fonts, :sprites, :physics, :models, :shaders] do
   end
-  
+
   copyTask 'resources/audio/bgm/*', BGM_DIRECTORY, :audio_assets
   copyTask 'resources/audio/sfx/*', SFX_DIRECTORY, :audio_assets
   task :audio => [BGM_DIRECTORY, SFX_DIRECTORY, :audio_assets] do
@@ -65,6 +65,12 @@ namespace :assets do
   task :sprites => [SPRITESHEET_DIRECTORY] do
     spritesheets = Dir["resources/spritesheets/*.tps"].map do |spritesheet| 
       system "/usr/local/bin/TexturePacker '#{spritesheet}'"
+    end
+  end
+
+  task :sprites => [SPRITESHEET_DIRECTORY, 'tools:texturetool'] do
+    spritesheets = Dir["resources/spritesheets/exported/*.png"].map do |spritesheet|
+      system "pixelboost/bin/texturetool '#{spritesheet}' #{File.join SPRITESHEET_DIRECTORY, spritesheet.gsub(/.*\/([^\/]*).png/, '\1')}.jpa"
     end
   end
 
