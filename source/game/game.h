@@ -1,10 +1,10 @@
 #pragma once
 
-#include "pixelboost/framework/game.h"
+#include "pixelboost/framework/engine.h"
 
 class SoundSystem;
 
-class Game : public pb::Game
+class Game : public pb::Engine
 {
 public:
     Game(void* viewController);

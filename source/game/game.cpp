@@ -11,7 +11,7 @@
 #include "pixelboost/debug/log.h"
 
 Game::Game(void* viewController)
-    : pb::Game(viewController)
+    : pb::Engine(viewController)
     , _CurrentScreen(0)
 {
     GetSpriteRenderer()->LoadSpriteSheet(pb::kFileLocationBundle, "game");
@@ -40,7 +40,7 @@ Game::~Game()
 
 Game* Game::Instance()
 {
-    return static_cast<Game*>(pb::Game::Instance());
+    return static_cast<Game*>(pb::Engine::Instance());
 }
 
 void Game::Update(float time)
@@ -48,12 +48,12 @@ void Game::Update(float time)
     _SoundSystem->Update(time);
     _CurrentScreen->Update(time);
     
-    pb::Game::Update(time);
+    pb::Engine::Update(time);
 }
 
 void Game::Render()
 {
-    pb::Game::Render();
+    pb::Engine::Render();
 }
 
 SoundSystem* Game::GetSoundSystem()
